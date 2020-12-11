@@ -1,0 +1,21 @@
+.background-color {
+  background-color: blue;
+}
+
+.dimensions {
+  height: 8vh;
+  width: 70%;
+}
+
+.logo {
+  height: 7vh;
+  width: auto;
+}
+
+.welcome-blurb {
+  width: 25rem;
+}
+
+.loginLogoutStaticWidth {
+  width: 3rem;
+}
