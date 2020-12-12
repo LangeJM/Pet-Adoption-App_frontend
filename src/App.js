@@ -5,12 +5,15 @@ import './App.css';
 import Header from './components/Header'
 import SignInModal from './components/SignInModal'
 import SignUpModal from './components/SignUpModal'
+import Homepage from './components/Homepage';
+import PetsPage from './components/PetsPage'
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -71,18 +74,33 @@ class App extends React.Component {
     return(
       <Router>
         <Switch>
-          <div className="App w-100">
-            {headerVar}
-            <SignInModal
-              signInModalIsOpen={signInModalIsOpen}
-              onLogIn={(event) => this.handleLogin(event)}
-            />
-            <SignUpModal
-              signUpModalIsOpen={signUpModalIsOpen}
-              onSignUp={(event) => this.handleSignUp(event)}
-            />
-
-      
+          <div className=' w-100 d-flex justify-content-center'>
+            <div className="App w-75">
+              {headerVar}
+              <SignInModal
+                signInModalIsOpen={signInModalIsOpen}
+                onLogIn={(event) => this.handleLogin(event)}
+              />
+              <SignUpModal
+                signUpModalIsOpen={signUpModalIsOpen}
+                onSignUp={(event) => this.handleSignUp(event)}
+                />
+              <Route path="/admin">
+                <h1>Admin Page</h1>
+              </Route>
+              <Route path="/profile">
+                <h1>My Profile</h1>
+                    
+              </Route>
+              <Route path="/pets">
+                <PetsPage />
+                   
+              </Route>
+              <Route exact path="/">
+                    <Homepage        
+                    />
+              </Route>      
+            </div>
           </div>
         </Switch>
       </Router>
