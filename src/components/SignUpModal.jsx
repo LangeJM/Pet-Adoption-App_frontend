@@ -14,7 +14,7 @@ const SignUpModal = (props) => {
       top: "15%",
       left: "35%",
       right: "35%",
-      bottom: "15%",
+      bottom: "23%",
     },
   };
 

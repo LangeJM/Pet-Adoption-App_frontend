@@ -14,7 +14,7 @@ const SignInModal = (props) => {
       top: "25%",
       left: "35%",
       right: "35%",
-      bottom: "30%",
+      bottom: "35%",
     },
   };
 

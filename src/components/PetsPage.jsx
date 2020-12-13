@@ -1,6 +1,5 @@
 import React from "react";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
+import { Tabs, Tab } from "react-bootstrap";
 import PetCardsDeck from "./PetCardsDeck";
 
 class PetsPage extends React.Component {

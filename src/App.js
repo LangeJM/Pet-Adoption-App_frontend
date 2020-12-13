@@ -9,6 +9,7 @@ import Homepage from './components/Homepage';
 import PetsPage from './components/PetsPage'
 import SearchPage from './components/SearchPage'
 import ProfilePage from './components/ProfilePage'
+import AdminPage from './components/AdminPage'
 
 import {
   BrowserRouter as Router,
@@ -88,7 +89,7 @@ class App extends React.Component {
                 onSignUp={(event) => this.handleSignUp(event)}
                 />
               <Route path="/admin">
-                <h1>Admin Page</h1>
+                <AdminPage />
               </Route>
               <Route path="/profile">
                 <ProfilePage/>
