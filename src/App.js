@@ -7,6 +7,8 @@ import SignInModal from './components/SignInModal'
 import SignUpModal from './components/SignUpModal'
 import Homepage from './components/Homepage';
 import PetsPage from './components/PetsPage'
+import SearchPage from './components/SearchPage'
+import ProfilePage from './components/ProfilePage'
 
 import {
   BrowserRouter as Router,
@@ -89,7 +91,11 @@ class App extends React.Component {
                 <h1>Admin Page</h1>
               </Route>
               <Route path="/profile">
-                <h1>My Profile</h1>
+                <ProfilePage/>
+                    
+              </Route>
+              <Route path="/search">
+                <SearchPage/>
                     
               </Route>
               <Route path="/pets">

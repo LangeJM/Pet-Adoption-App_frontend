@@ -60,17 +60,21 @@ const Header = (props) => {
         </Link>
       </Nav>
       <div className="ml-5 d-flex row small">
-        <button
-          id="search-button"
-          type="button"
-          className="font-weight-bold text-white border-0 bg-transparent m-1 btn-sm d-flex align-items-center"
-        >
-          <FontAwesomeIcon
-            icon={["fas", "search"]}
-            size="2x"
-            style={{ color: "white" }}
-          />
-        </button>
+        <Nav>
+          <Link to="/search" href="#search">
+            <button
+              id="search-button"
+              type="button"
+              className="font-weight-bold text-white border-0 bg-transparent m-1 btn-sm d-flex align-items-center"
+            >
+              <FontAwesomeIcon
+                icon={["fas", "search"]}
+                size="2x"
+                style={{ color: "white" }}
+              />
+            </button>
+          </Link>
+        </Nav>
         <button
           id="login-button"
           type="button"

@@ -7,7 +7,7 @@ class PetsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: "home",
+      key: "myPets",
     };
   }
 
@@ -19,10 +19,14 @@ class PetsPage extends React.Component {
         onSelect={(k) => this.setState({ key: k })}
       >
         <Tab eventKey="myPets" title="My Pets">
-          <PetCardsDeck />
+          <div className="d-flex justify-content-center mt-3">
+            <PetCardsDeck />
+          </div>
         </Tab>
         <Tab eventKey="savedPets" title="Saved Pets">
-          <PetCardsDeck />
+          <div className="d-flex justify-content-center mt-3">
+            <PetCardsDeck />
+          </div>
         </Tab>
       </Tabs>
     );
