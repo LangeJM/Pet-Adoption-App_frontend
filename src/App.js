@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './images/I-PetsLogo.png';
 import './App.css';
 
 import Header from './components/Header'
