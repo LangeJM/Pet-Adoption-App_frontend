@@ -1,48 +1,57 @@
 import React from "react";
 
 import { Table } from "react-bootstrap";
+import { getUsersApi } from "../apis/apis";
 
-const AdminDashboardUsers = (props) => {
-  return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Type</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Petsy</td>
-          <td>Charisma</td>
-          <td>Owner</td>
-          <td>pet.Sy@charisma.com</td>
-          <td>+001 53 24685587</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Petsy</td>
-          <td>Charisma</td>
-          <td>Owner</td>
-          <td>pet.Sy@charisma.com</td>
-          <td>+001 53 24685587</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Petsy</td>
-          <td>Charisma</td>
-          <td>Owner</td>
-          <td>pet.Sy@charisma.com</td>
-          <td>+001 53 24685587</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
+class AdminDashboardUsers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      usersData: "",
+      isFetching: "",
+    };
+  }
 
+  componentDidMount() {
+    getUsersApi()
+      .then((data) => this.setState({ usersData: data.data.data }))
+      .catch((err) => console.log(err));
+  }
+
+  renderUsersTable() {
+    if (this.state.usersData) {
+      return this.state.usersData.map((user, index) => {
+        const { firstName, lastName, type, email, phone, _id } = user;
+        return (
+          <tr key={_id}>
+            <td>{index + 1}</td>
+            <td>{firstName}</td>
+            <td>{lastName}</td>
+            <td>{type}</td>
+            <td>{email}</td>
+            <td>{phone}</td>
+          </tr>
+        );
+      });
+    }
+  }
+
+  render() {
+    return (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Type</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>{this.renderUsersTable()}</tbody>
+      </Table>
+    );
+  }
+}
 export default AdminDashboardUsers;

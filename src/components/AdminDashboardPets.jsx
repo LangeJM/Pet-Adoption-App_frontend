@@ -1,56 +1,62 @@
 import React from "react";
 
 import { Table } from "react-bootstrap";
+import { getPetsApi } from "../apis/apis";
 
-const AdminDashboardPets = (props) => {
-  return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Type</th>
-          <th>Breed</th>
-          <th>Color</th>
-          <th>Weight</th>
-          <th>Height</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Petsy</td>
-          <td>Fostered</td>
-          <td>Cat</td>
-          <td>Siamese</td>
-          <td>White</td>
-          <td>6 kg</td>
-          <td>30 cm</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Joseph III.</td>
-          <td>Adopted</td>
-          <td>Dog</td>
-          <td>Hanoverian Scenthound</td>
-          <td>Mixed</td>
-          <td>36 kg</td>
-          <td>50 cm</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Dundee</td>
-          <td>Available</td>
-          <td>Crocodile</td>
-          <td>Saltwater Crocodile</td>
-          <td>Greenish</td>
-          <td>500 kg</td>
-          <td>40 cm</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
+class AdminDashboardPets extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      petsData: "",
+      isFetching: "", // show spinner etc...
+    };
+  }
+
+  componentDidMount() {
+    getPetsApi()
+      .then((data) => this.setState({ petsData: data.data.data }))
+      .catch((err) => console.log(err));
+  }
+
+  renderPetsTable() {
+    if (this.state.petsData) {
+      return this.state.petsData.map((pet, index) => {
+        const { name, status, type, breed, color, weight, height, _id } = pet;
+        return (
+          <tr key={_id}>
+            <td>{index + 1}</td>
+            <td>{name}</td>
+            <td>{status}</td>
+            <td>{type}</td>
+            <td>{breed}</td>
+            <td>{color}</td>
+            <td>{weight}</td>
+            <td>{height}</td>
+          </tr>
+        );
+      });
+    }
+  }
+
+  render() {
+    return (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Breed</th>
+            <th>Color</th>
+            <th>Weight</th>
+            <th>Height</th>
+          </tr>
+        </thead>
+        <tbody>{this.renderPetsTable()}</tbody>
+      </Table>
+    );
+  }
+}
 
 export default AdminDashboardPets;

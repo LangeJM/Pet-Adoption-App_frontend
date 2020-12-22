@@ -20,10 +20,6 @@ class AdminAddPets extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.state);
-  }
-
   handleBodyChange = (event) => {
     event.preventDefault();
     if (event.target.id === "petName")
@@ -58,7 +54,7 @@ class AdminAddPets extends React.Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     createPetApi(this.state);
-    console.log(this.state);
+    window.location.reload(false);
   };
 
   render() {

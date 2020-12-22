@@ -13,3 +13,28 @@ export const createPetApi = (data) => {
         .catch(err => console.log(err))
 }
 
+export const createUserApi = (data) => {
+    axios({
+        method: 'post',
+        url: baseUrl + '/user',
+        data: data
+    })
+        .then(data => window.alert(data.data.message))
+        .catch(err => console.log(err))
+}
+
+export const getPetsApi = (data) => {
+    return axios({
+        method: 'get',
+        url: baseUrl + '/pets',
+        data: data
+    })
+}
+
+export const getUsersApi = (data) => {
+    return axios({
+        method: 'get',
+        url: baseUrl + '/users',
+        data: data
+    })
+}

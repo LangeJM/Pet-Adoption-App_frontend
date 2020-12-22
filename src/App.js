@@ -16,7 +16,6 @@ import {
   Route,
 } from "react-router-dom";
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,19 +24,13 @@ class App extends React.Component {
       firstName: '',
       lastName: '',
       isAdmin: '',
-      
       signInModalIsOpen: false,
       signUpModalIsOpen: false,
-
-
     }
-  
-  
   }
 
   componentDidMount() {
     this.setState({ firstName: "Achim", lastName: "Kugel", isAdmin: true, isLoggedIn: false })
-    console.log(this.state.signInModalIsOpen)
   }
   
   handleLogin(event) {
@@ -58,11 +51,6 @@ class App extends React.Component {
     } 
   }
 
-  
-
-
-
-
   render() {
     const { isLoggedIn, firstName, lastName, isAdmin, signInModalIsOpen, signUpModalIsOpen } = this.state;
     const headerVar = <Header
@@ -76,6 +64,7 @@ class App extends React.Component {
     return(
       <Router>
         <Switch>
+          <React.Fragment>
           <div className=' w-100 d-flex justify-content-center'>
             <div className="App w-75">
               {headerVar}
@@ -107,13 +96,13 @@ class App extends React.Component {
                     />
               </Route>      
             </div>
-          </div>
+            </div>
+            </React.Fragment>
         </Switch>
       </Router>
       
-  );
+    );
   }
-  
 }
 
 export default App;
