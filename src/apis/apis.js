@@ -7,20 +7,25 @@ export const createPetApi = (data) => {
     axios({
         method: 'post',
         url: baseUrl + '/pet',
+        // url: "https://httpbin.org/anything",
         data: data
     })
-        .then(data => window.alert(data.data.message))
-        .catch(err => console.log(err))
+        .then((res) => {
+            console.log(res);
+            alert(res.data.message)
+            window.location.reload(false)
+        })
+        .catch((err) => console.log(err));
 }
 
 export const createUserApi = (data) => {
-    axios({
+    return axios({
         method: 'post',
         url: baseUrl + '/user',
         data: data
     })
-        .then(data => window.alert(data.data.message))
-        .catch(err => console.log(err))
+        // .then(data => window.alert(data.data.message))
+        // .catch(err => console.log(err))
 }
 
 export const getPetsApi = (data) => {

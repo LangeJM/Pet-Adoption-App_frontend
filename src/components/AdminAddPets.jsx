@@ -16,7 +16,8 @@ class AdminAddPets extends React.Component {
       color: "",
       dietaryRestrictions: "",
       hypoallergenic: false,
-      image: "",
+      image: [],
+      imageName: "",
     };
   }
 
@@ -40,22 +41,40 @@ class AdminAddPets extends React.Component {
       this.setState({ dietaryRestrictions: event.target.value });
     if (event.target.id === "petAllergies")
       this.setState({ hypoallergenic: event.target.checked });
+    if (event.target.id === "petImage") {
+      this.setState({ image: event.target.files[0] }); //Needs multer on the backend!!!!
+      this.setState({ imageName: event.target.value });
+    }
     console.log(this.state);
-  };
-
-  handleFileUpload = (event) => {
-    event.preventDefault();
-    console.log(event.target.files);
-    console.log(event.target.value);
-    if (event.target.id === "petImage")
-      this.setState({ image: event.target.value }); // needs multer on the backend!!!!
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    createPetApi(this.state);
-    window.location.reload(false);
+    const data = new FormData();
+    data.append("name", this.state.name);
+    data.append("status", this.state.status);
+    data.append("type", this.state.type);
+    data.append("breed", this.state.breed);
+    data.append("height", this.state.height);
+    data.append("weight", this.state.weight);
+    data.append("color", this.state.color);
+    data.append("hypoallergenic", this.state.hypoallergenic);
+    data.append("dietaryRestrictions", this.state.dietaryRestrictions);
+    data.append("fosteredBy", this.state.fosteredBy);
+    data.append("savedBy", this.state.savedBy);
+    data.append("image", this.state.image);
+    data.append("imageName", this.state.imageName);
+    createPetApi(data);
+    // window.location.reload(false);
   };
+
+  /*
+  this.state.petsData.map((pet, index) => {  
+        const { name, status, type, breed, color, weight, height, _id } = pet;
+        
+
+      });
+  */
 
   render() {
     return (
@@ -232,14 +251,15 @@ class AdminAddPets extends React.Component {
             <Form.File
               className="position-relative mt-1 ml-3"
               // required   // need to handle with multer on backend
-              name="file"
+              name="petImage"
               // onChange={handleChange}
               // isInvalid={!!errors.file}
               // feedback={errors.file}
               id="petImage"
               feedbackTooltip
-              value={this.state.image}
-              onChange={(event) => this.handleFileUpload(event)}
+              value={this.state.imageName}
+              accept=".png, .jpg, .jpeg, .gif, .tif, .tiff"
+              onChange={(event) => this.handleBodyChange(event)}
             />
           </Form.Group>
         </div>

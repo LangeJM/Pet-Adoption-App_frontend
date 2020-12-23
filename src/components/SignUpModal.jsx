@@ -85,7 +85,15 @@ class SignUpModal extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    createUserApi(this.state);
+    createUserApi(this.state)
+      .then((data) => {
+        window.alert(data.data.message); //refactor!!!
+        window.open("http://localhost:3000/pets");
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert(err); //refactor!!!
+      });
   };
 
   render() {
