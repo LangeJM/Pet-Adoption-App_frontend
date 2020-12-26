@@ -5,14 +5,7 @@ import Button from "react-bootstrap/Button";
 
 import "./PetCard.css";
 
-import catPic from "../images/Cat_Petsy.jpg";
-
 const PetCard = (props) => {
-  const petName = "Petsy";
-  const petDescription =
-    "Some quick example text to build on the card title and make up the bulk of the card's content.";
-  const petPic = catPic;
-
   return (
     <div className="mb-4">
       <Card style={{ width: "18rem" }}>

@@ -7,11 +7,10 @@ export const createPetApi = (data) => {
     axios({
         method: 'post',
         url: baseUrl + '/pet',
-        // url: "https://httpbin.org/anything",
         data: data
     })
         .then((res) => {
-            console.log(res);
+            console.log(res); // Delete!!!
             alert(res.data.message)
             window.location.reload(false)
         })

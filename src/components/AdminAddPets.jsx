@@ -21,7 +21,7 @@ class AdminAddPets extends React.Component {
     };
   }
 
-  handleBodyChange = (event) => {
+  handleOnChange = (event) => {
     event.preventDefault();
     if (event.target.id === "petName")
       this.setState({ name: event.target.value });
@@ -32,9 +32,11 @@ class AdminAddPets extends React.Component {
     if (event.target.id === "petBreed")
       this.setState({ breed: event.target.value });
     if (event.target.id === "petHeight")
-      this.setState({ height: event.target.value });
+      if (event.target.value.length < 8)
+        this.setState({ height: event.target.value });
     if (event.target.id === "petWeight")
-      this.setState({ weight: event.target.value });
+      if (event.target.value.length < 8)
+        this.setState({ weight: event.target.value });
     if (event.target.id === "petColor")
       this.setState({ color: event.target.value });
     if (event.target.id === "petDiet")
@@ -42,8 +44,15 @@ class AdminAddPets extends React.Component {
     if (event.target.id === "petAllergies")
       this.setState({ hypoallergenic: event.target.checked });
     if (event.target.id === "petImage") {
-      this.setState({ image: event.target.files[0] }); //Needs multer on the backend!!!!
-      this.setState({ imageName: event.target.value });
+      const allowedFileTypes = ["png", "jpg", "jpeg", "gif"];
+      if (allowedFileTypes.includes(event.target.value.split(".").pop())) {
+        this.setState({
+          image: event.target.files[0],
+          imageName: event.target.value,
+        });
+      } else {
+        console.log("File type not supported."); // Need to show to user!!!
+      }
     }
     console.log(this.state);
   };
@@ -65,7 +74,6 @@ class AdminAddPets extends React.Component {
     data.append("image", this.state.image);
     data.append("imageName", this.state.imageName);
     createPetApi(data);
-    // window.location.reload(false);
   };
 
   /*
@@ -84,16 +92,17 @@ class AdminAddPets extends React.Component {
       >
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petName">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Name
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="text"
                 placeholder="E.g. Petsy"
                 required
+                maxLength="30"
                 value={this.state.name}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -101,16 +110,16 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petStatus" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Status
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 as="select"
                 type="text"
                 required
                 value={this.state.status}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               >
                 <option>Please select</option>
                 <option>Available</option>
@@ -123,16 +132,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petType" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Type
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="text"
                 placeholder="E.g. cat"
                 required
+                maxLength="30"
                 value={this.state.type}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -140,16 +150,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petBreed" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Breed
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="text"
                 placeholder="E.g. Siamese"
                 required
+                maxLength="30"
                 value={this.state.breed}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -157,16 +168,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petHeight" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Height
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="number"
                 placeholder="E.g. 30 cm"
                 required
+                maxLength="7"
                 value={this.state.height}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -174,16 +186,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petWeight" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Weight
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="number"
                 placeholder="E.g. 30 kg"
                 required
+                maxLength="7"
                 value={this.state.weight}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -191,16 +204,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petColor" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Color
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="text"
                 placeholder="E.g. white"
                 required
+                maxLength="20"
                 value={this.state.color}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -208,16 +222,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petDiet" className="mt-3">
-            <Form.Label column sm={2}>
-              Diet
+            <Form.Label column sm={4}>
+              Dietary Restrictions
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Control
                 type="text"
                 placeholder="E.g. No nuts"
                 required
+                maxLength="30"
                 value={this.state.dietaryRestrictions}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -229,15 +244,15 @@ class AdminAddPets extends React.Component {
             controlId="petAllergies"
             className="mt-3 align-items-center"
           >
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Hypoallergenic
             </Form.Label>
-            <Col sm={10}>
+            <Col sm={8}>
               <Form.Check
                 type="checkbox"
                 label="Check to confirm"
                 value={this.state.hypoallergenic}
-                onInput={(event) => this.handleBodyChange(event)}
+                onInput={(event) => this.handleOnChange(event)}
               />
             </Col>
           </Form.Group>
@@ -245,21 +260,17 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petImage" className="mt-3">
-            <Form.Label column sm={2}>
+            <Form.Label column sm={4}>
               Image
             </Form.Label>
             <Form.File
               className="position-relative mt-1 ml-3"
-              // required   // need to handle with multer on backend
               name="petImage"
-              // onChange={handleChange}
-              // isInvalid={!!errors.file}
-              // feedback={errors.file}
               id="petImage"
               feedbackTooltip
               value={this.state.imageName}
               accept=".png, .jpg, .jpeg, .gif, .tif, .tiff"
-              onChange={(event) => this.handleBodyChange(event)}
+              onChange={(event) => this.handleOnChange(event)}
             />
           </Form.Group>
         </div>
