@@ -16,45 +16,48 @@ class AdminAddPets extends React.Component {
       color: "",
       dietaryRestrictions: "",
       hypoallergenic: false,
-      image: [],
+      image: "",
       imageName: "",
+      fileTypeWarning: "",
     };
   }
 
   handleOnChange = (event) => {
+    const id = event.target.id;
+    const value = event.target.value;
     event.preventDefault();
-    if (event.target.id === "petName")
-      this.setState({ name: event.target.value });
-    if (event.target.id === "petStatus")
-      this.setState({ status: event.target.value });
-    if (event.target.id === "petType")
-      this.setState({ type: event.target.value });
-    if (event.target.id === "petBreed")
-      this.setState({ breed: event.target.value });
-    if (event.target.id === "petHeight")
-      if (event.target.value.length < 8)
-        this.setState({ height: event.target.value });
-    if (event.target.id === "petWeight")
-      if (event.target.value.length < 8)
-        this.setState({ weight: event.target.value });
-    if (event.target.id === "petColor")
-      this.setState({ color: event.target.value });
-    if (event.target.id === "petDiet")
-      this.setState({ dietaryRestrictions: event.target.value });
-    if (event.target.id === "petAllergies")
+    if (id === "petName") this.setState({ name: value });
+    if (id === "petStatus") this.setState({ status: value });
+    if (id === "petType") this.setState({ type: value });
+    if (id === "petBreed") this.setState({ breed: value });
+    if (id === "petHeight")
+      if (value.length < 8) this.setState({ height: value });
+    if (id === "petWeight")
+      if (value.length < 8) this.setState({ weight: value });
+    if (id === "petColor") this.setState({ color: value });
+    if (id === "petDiet") this.setState({ dietaryRestrictions: value });
+    if (id === "petAllergies")
       this.setState({ hypoallergenic: event.target.checked });
-    if (event.target.id === "petImage") {
+    if (id === "petImage") {
       const allowedFileTypes = ["png", "jpg", "jpeg", "gif"];
-      if (allowedFileTypes.includes(event.target.value.split(".").pop())) {
+      this.setState({ image: "", imageName: "" });
+      if (allowedFileTypes.includes(value.split(".").pop())) {
         this.setState({
           image: event.target.files[0],
-          imageName: event.target.value,
+          imageName: value,
+          fileTypeWarning: "",
         });
       } else {
-        console.log("File type not supported."); // Need to show to user!!!
+        this.setState({
+          fileTypeWarning: `Only pictures of the following format are supported: ${allowedFileTypes
+            .map(function (el) {
+              return el;
+            })
+            .join(", ")}`,
+        });
       }
     }
-    console.log(this.state);
+    // console.log(this.state); Delete!!!
   };
 
   handleFormSubmit = (event) => {
@@ -258,8 +261,8 @@ class AdminAddPets extends React.Component {
           </Form.Group>
         </div>
 
-        <div className="mb-4 text-left">
-          <Form.Group as={Row} controlId="petImage" className="mt-3">
+        <div className="m-0 mb-4 text-left">
+          <Form.Group as={Row} controlId="petImage" className="mb-0 mt-3">
             <Form.Label column sm={4}>
               Image
             </Form.Label>
@@ -273,6 +276,9 @@ class AdminAddPets extends React.Component {
               onChange={(event) => this.handleOnChange(event)}
             />
           </Form.Group>
+          <Form.Label column sm={12} className="text-danger p-0 pt-1">
+            {this.state.fileTypeWarning}
+          </Form.Label>
         </div>
 
         <Form.Group as={Row}>
