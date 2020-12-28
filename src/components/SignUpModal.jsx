@@ -17,7 +17,7 @@ class SignUpModal extends React.Component {
       passwordControl: "",
       phone: "",
       isAdmin: false,
-      passwordTooltip: false,
+      passwordsMatch: false,
       buttonDisabled: true,
     };
 
@@ -78,13 +78,13 @@ class SignUpModal extends React.Component {
   passwordMatch = (event) => {
     const { password, passwordControl } = this.state;
     event.preventDefault();
-    if (password !== passwordControl) this.setState({ passwordTooltip: true });
-    else this.setState({ passwordTooltip: false });
+    if (password !== passwordControl) this.setState({ passwordsMatch: true });
+    else this.setState({ passwordsMatch: false });
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    if (!this.state.passwordTooltip) {
+    if (!this.state.passwordsMatch) {
       createUserApi(this.state);
     }
   };
@@ -161,7 +161,7 @@ class SignUpModal extends React.Component {
               />
               <Overlay
                 target={this.target.current}
-                show={this.state.passwordTooltip}
+                show={this.state.passwordsMatch}
                 placement="bottom"
               >
                 {(props) => (
