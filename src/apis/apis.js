@@ -23,8 +23,15 @@ export const createUserApi = (data) => {
         url: baseUrl + '/user',
         data: data
     })
-        // .then(data => window.alert(data.data.message))
-        // .catch(err => console.log(err))
+        .then((res) => {
+            alert(`Account creation successful. \nWelcome to I-Pets ${res.data.name}!`)
+            window.location.assign(`${window.location.origin}/pets`);
+            
+        })
+        .catch((err) => {
+            console.log(err && err.response.data.error)
+            alert(err.response.data.error)
+        })
 }
 
 export const getPetsApi = (data) => {

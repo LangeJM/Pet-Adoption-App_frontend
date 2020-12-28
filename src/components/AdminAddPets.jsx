@@ -14,7 +14,7 @@ class AdminAddPets extends React.Component {
       height: "",
       weight: "",
       color: "",
-      dietaryRestrictions: "",
+      dietaryRestrictions: "None",
       hypoallergenic: false,
       image: "",
       imageName: "",

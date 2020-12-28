@@ -16,6 +16,7 @@ class SignUpModal extends React.Component {
       password: "",
       passwordControl: "",
       phone: "",
+      isAdmin: false,
       passwordTooltip: false,
       buttonDisabled: true,
     };
@@ -58,8 +59,7 @@ class SignUpModal extends React.Component {
       phone.length
     ) {
       this.setState({ buttonDisabled: false });
-      console.log(this.state);
-    } else this.setState({ buttonDisabled: true });
+    } else this.setState({ buttonDisabled: true }); // Need to find a better way to disable the button (instant update...)
 
     if (event.target.id === "firstName")
       this.setState({ firstName: event.target.value });
@@ -73,7 +73,6 @@ class SignUpModal extends React.Component {
       this.setState({ passwordControl: event.target.value });
     if (event.target.id === "phone")
       this.setState({ phone: event.target.value });
-    console.log(this.state);
   };
 
   passwordMatch = (event) => {
@@ -85,15 +84,9 @@ class SignUpModal extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    createUserApi(this.state)
-      .then((data) => {
-        window.alert(data.data.message); //refactor!!!
-        window.open("http://localhost:3000/pets");
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert(err); //refactor!!!
-      });
+    if (!this.state.passwordTooltip) {
+      createUserApi(this.state);
+    }
   };
 
   render() {
@@ -113,12 +106,18 @@ class SignUpModal extends React.Component {
               <Form.Control
                 type="text"
                 placeholder="First name"
+                required
+                maxLength="30"
+                minLength="3"
                 onInput={(event) => this.handleBodyChange(event)}
                 id="firstName"
               />
               <Form.Control
                 type="text"
                 placeholder="Last name"
+                required
+                maxLength="30"
+                minLength="3"
                 className="mt-3"
                 onInput={(event) => this.handleBodyChange(event)}
                 id="lastName"
@@ -129,6 +128,7 @@ class SignUpModal extends React.Component {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
+                required
                 onInput={(event) => this.handleBodyChange(event)}
               />
               <Form.Text className="text-muted">
@@ -141,6 +141,9 @@ class SignUpModal extends React.Component {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                required
+                maxLength="30"
+                minLength="7"
                 onInput={(event) => this.handleBodyChange(event)}
                 id="password"
               />
@@ -148,6 +151,9 @@ class SignUpModal extends React.Component {
                 ref={this.target}
                 type="password"
                 placeholder="Confirm password"
+                required
+                maxLength="30"
+                minLength="7"
                 className="mt-3"
                 onInput={(event) => this.handleBodyChange(event)}
                 onBlur={(event) => this.passwordMatch(event)} //validate 2nd password matches. onBlur serves as 'onfocusout' in React
@@ -159,7 +165,7 @@ class SignUpModal extends React.Component {
                 placement="bottom"
               >
                 {(props) => (
-                  <Tooltip
+                  <Tooltip // Difficult to find information how to format this like the standard ones
                     id=""
                     {...props}
                     style={{
@@ -180,6 +186,9 @@ class SignUpModal extends React.Component {
               <Form.Control
                 type="tel"
                 placeholder="Enter phone number"
+                required
+                maxLength="12"
+                minLength="7"
                 onInput={(event) => this.handleBodyChange(event)}
               />
             </Form.Group>
