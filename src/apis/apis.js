@@ -13,7 +13,7 @@ export const createUserApi = (data) => {
     })
         .then((res) => {
             alert(`Account creation successful. \nWelcome to I-Pets ${res.data.name}!`)
-            window.location.assign(`${window.location.origin}/pets`);
+            // window.location.assign(`${window.location.origin}/pets`);
         })
         .catch((err) => {
             alert(err.response.data.error)
