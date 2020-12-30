@@ -52,6 +52,14 @@ export const getPetsApi = (data) => {
     })
 }
 
+export const getPetsSampleApi = (data) => {
+    return axios({
+        method: 'get',
+        url: baseUrl + '/petsSample',
+        data: data
+    })
+}
+
 export const createPetApi = (data) => {
     axios({
         method: 'post',

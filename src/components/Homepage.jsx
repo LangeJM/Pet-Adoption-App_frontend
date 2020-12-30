@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getPetsApi } from "../apis/apis";
+import { getPetsSampleApi } from "../apis/apis";
 import PetCardsDeck from "./PetCardsDeck";
 
 class Homepage extends React.Component {
@@ -13,27 +13,11 @@ class Homepage extends React.Component {
   }
 
   componentDidMount() {
-    getPetsApi()
+    getPetsSampleApi()
       .then((data) => {
-        this.setState({ pets: data.data.data });
-        this.setState({ petsRandomSample: this.getRandom(this.state.pets, 4) });
+        this.setState({ petsRandomSample: data.data.data });
       })
       .catch((err) => console.log(err));
-  }
-
-  getRandom(arr, n) {
-    // Taken from https://stackoverflow.com/a/19270021/12754665
-    let result = new Array(n),
-      len = arr.length,
-      taken = new Array(len);
-    if (n > len)
-      throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-      const x = Math.floor(Math.random() * len);
-      result[n] = arr[x in taken ? taken[x] : x];
-      taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
   }
 
   render() {
