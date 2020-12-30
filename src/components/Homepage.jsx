@@ -1,6 +1,6 @@
 import React from "react";
-import { getPetsApi } from "../apis/apis";
 
+import { getPetsApi } from "../apis/apis";
 import PetCardsDeck from "./PetCardsDeck";
 
 class Homepage extends React.Component {

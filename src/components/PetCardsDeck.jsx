@@ -1,7 +1,6 @@
 import React from "react";
 
 import CardDeck from "react-bootstrap/CardDeck";
-
 import PetCard from "./PetCard";
 
 const PetCardsDeck = (props) => {

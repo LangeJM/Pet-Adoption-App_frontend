@@ -6,6 +6,15 @@ import Button from "react-bootstrap/Button";
 import "./PetCard.css";
 
 const PetCard = (props) => {
+  function startsWithVowel(word) {
+    const vowels = "aeiouAEIOU";
+    return vowels.indexOf(word[0]) !== -1;
+  }
+
+  let firstCardSentence = "";
+  if (startsWithVowel(props.breed)) firstCardSentence = "is an";
+  else firstCardSentence = "is a";
+
   return (
     <div className="mb-4">
       <Card style={{ width: "18rem" }}>
@@ -23,7 +32,7 @@ const PetCard = (props) => {
         <Card.Body className="text-left">
           <Card.Title>{props.name}</Card.Title>
           <Card.Text>
-            {props.name} is a {props.breed}. <br />
+            {props.name} {firstCardSentence} {props.breed}. <br />
             Status: <b>{props.status}</b>.
           </Card.Text>
           <Button className="mt-1 float-right" variant="primary">
