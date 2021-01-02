@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import Cookies from 'js-cookie';
+
 const baseUrl = 'http://localhost:5000/api'
 
 
@@ -13,7 +15,8 @@ export const createUserApi = (data) => {
     })
         .then((res) => {
             alert(`Account creation successful. \nWelcome to I-Pets ${res.data.name}!`)
-            // window.location.assign(`${window.location.origin}/pets`);
+            Cookies.set('I-Pets', `${res.data.sessionId}`, { path: '/' });
+            window.location.assign(`${window.location.origin}/pets`);
         })
         .catch((err) => {
             alert(err.response.data.error)
@@ -29,11 +32,20 @@ export const loginUserApi = (data) => {
     })
         .then((res) => {
             alert(`Login successful. \n\nWelcome to I-Pets ${res.data.name}!`)
+            Cookies.set('I-Pets', `${res.data.sessionId}`, { path: '/' });
             window.location.assign(`${window.location.origin}/pets`);
         })
         .catch((err) => {
-            alert(err.response.data.message)
+            alert(err.response.data.error)
         })
+}
+
+export const getCurrentUserApi = (data) => {
+    return axios({
+        method: 'post',
+        url: baseUrl + '/currentUser',
+        data: data
+    })
 }
 
 export const getUsersApi = (data) => {
@@ -67,9 +79,8 @@ export const createPetApi = (data) => {
         data: data
     })
         .then((res) => {
-            console.log(res); // Delete!!!
             alert(res.data.message)
-            window.location.reload(false)
+            window.location.reload()
         })
         .catch((err) => console.log(err));
 }

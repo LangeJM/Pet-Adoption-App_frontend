@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import logo from "../images/I-PetsLogo.png";
 
+import Cookies from "js-cookie";
+
 import "./Header.css";
 
 const Header = (props) => {
@@ -18,6 +20,9 @@ const Header = (props) => {
   let signUpVisibility = "visible";
   let loginDisplay = "d-lg-none";
   let logoutDisplay = "";
+  let myPetsVisibility = "";
+  let myProfileVisibility = "";
+
   if (props.isAdmin) {
     adminVisibility = "visible";
   }
@@ -26,13 +31,23 @@ const Header = (props) => {
     signUpVisibility = "invisible";
     loginDisplay = "d-lg-none";
     logoutDisplay = "";
+    // myPetsVisibility = "visible";
+    // myProfileVisibility = "visible";
   } else {
     welcomeBlurb = `Welcome to I-Pets!`;
     signUpVisibility = "visible";
     loginDisplay = "";
     logoutDisplay = "d-lg-none";
+    myPetsVisibility = "invisible";
+    myProfileVisibility = "invisible";
   }
 
+  function handleLogOut(event) {
+    event.preventDefault();
+    Cookies.remove("I-Pets");
+    alert("Successful logged out!");
+    window.location.assign("/");
+  }
   // function handleLogOut(event) {
 
   // }
@@ -49,10 +64,14 @@ const Header = (props) => {
       </Nav>
       <div className="mr-5 ml-5 welcome-blurb">{welcomeBlurb}</div>
       <Nav className="mr-auto">
-        <Link className="m-2" to="/pets" href="#pets">
+        <Link className={`m-2 ${myPetsVisibility}`} to="/pets" href="#pets">
           <strong>My Pets</strong>
         </Link>
-        <Link className="m-2" to="/profile" href="#profile">
+        <Link
+          className={`m-2 ${myProfileVisibility}`}
+          to="/profile"
+          href="#profile"
+        >
           <strong>My Profile</strong>
         </Link>
         <Link className={`m-2 ${adminVisibility}`} to="/admin" href="#admin">
@@ -87,6 +106,7 @@ const Header = (props) => {
           id="logout-button"
           type="button"
           className={`loginLogoutStaticWidth font-weight-bold text-white border-0 bg-transparent m-1 btn-sm d-flex align-items-center ${logoutDisplay}`}
+          onClick={(event) => handleLogOut(event)}
         >
           <div className="mr-2">Logout</div>
         </button>

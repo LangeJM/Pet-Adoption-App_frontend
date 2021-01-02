@@ -9,6 +9,7 @@ import PetsPage from './components/PetsPage'
 import SearchPage from './components/SearchPage'
 import ProfilePage from './components/ProfilePage'
 import AdminPage from './components/AdminPage'
+import {getCurrentUserApi} from './apis/apis'
 
 import {
   BrowserRouter as Router,
@@ -16,21 +17,38 @@ import {
   Route,
 } from "react-router-dom";
 
+import Cookies from 'js-cookie';
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      firstName: '',
-      lastName: '',
-      isAdmin: '',
       signInModalIsOpen: false,
       signUpModalIsOpen: false,
+      cookie: {
+        sessionId: Cookies.get("I-Pets")
+      },
+      userObject: {
+      }
+
     }
   }
 
   componentDidMount() {
-    this.setState({ firstName: "Achim", lastName: "Kugel", isAdmin: true, isLoggedIn: false })
+    // this.setState({ firstName: "Achim", lastName: "Kugel", isAdmin: true, isLoggedIn: false })
+    // const sessionId = JSON.stringify({ sessionId: this.state.sessionId })
+    const sessionId = this.state.cookie
+    console.log(sessionId)
+    getCurrentUserApi(sessionId)
+      .then((res) => {
+        console.log(res.data)
+        this.setState({userObject: res.data})
+      })
+        .catch((err) => {
+            console.log(err)
+        })
+    
   }
   
   handleLogin(event) {
@@ -52,12 +70,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, firstName, lastName, isAdmin, signInModalIsOpen, signUpModalIsOpen } = this.state;
+    console.log(this.state)
+    const { userObject,signInModalIsOpen, signUpModalIsOpen } = this.state;
     const headerVar = <Header
-      isLoggedIn={isLoggedIn}
-      firstName={firstName}
-      lastName={lastName}
-      isAdmin={isAdmin}
+      isLoggedIn={!!userObject.email}
+      
+      firstName={userObject.firstName}
+      lastName={userObject.lastName}
+      isAdmin={userObject.isAdmin}
       onLogIn={(event) => this.handleLogin(event)}
       onSignUp={(event) => this.handleSignUp(event)}
     />
@@ -77,18 +97,18 @@ class App extends React.Component {
                 onSignUp={(event) => this.handleSignUp(event)}
                 />
               <Route path="/admin">
-                <AdminPage />
+                <AdminPage userObject={this.state.userObject}/>
               </Route>
               <Route path="/profile">
-                <ProfilePage/>
+                <ProfilePage userObject={this.state.userObject}/>
                     
               </Route>
               <Route path="/search">
-                <SearchPage/>
+                <SearchPage userObject={this.state.userObject}/>
                     
               </Route>
               <Route path="/pets">
-                <PetsPage />
+                <PetsPage userObject={this.state.userObject}/>
                    
               </Route>
               <Route exact path="/">
