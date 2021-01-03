@@ -72,6 +72,15 @@ export const getPetsSampleApi = (data) => {
     })
 }
 
+export const getPetsBySearchApi = (data) => {
+    // console.log("apis: ",data)
+    return axios({
+        method: 'get',
+        url: baseUrl + '/petsSearch' + data,
+        // data: data
+    })
+}
+
 export const createPetApi = (data) => {
     axios({
         method: 'post',

@@ -7,7 +7,6 @@ import Image from "react-bootstrap/Image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import logo from "../images/I-PetsLogo.png";
 
 import Cookies from "js-cookie";
@@ -27,12 +26,10 @@ const Header = (props) => {
     adminVisibility = "visible";
   }
   if (props.isLoggedIn) {
-    welcomeBlurb = `Hi ${props.firstName} ${props.lastName} - Welcome back to I-Pets!`;
+    welcomeBlurb = `Hi ${props.firstName} - Welcome back to I-Pets!`;
     signUpVisibility = "invisible";
     loginDisplay = "d-lg-none";
     logoutDisplay = "";
-    // myPetsVisibility = "visible";
-    // myProfileVisibility = "visible";
   } else {
     welcomeBlurb = `Welcome to I-Pets!`;
     signUpVisibility = "visible";
@@ -48,13 +45,7 @@ const Header = (props) => {
     alert("Successful logged out!");
     window.location.assign("/");
   }
-  // function handleLogOut(event) {
 
-  // }
-
-  // if (props.isLoggedIn === false) {
-  //   return <Redirect to="/" />
-  // } else { '''''all the rest below''''' }
   return (
     <Navbar className="background-color justify-content-around d-flex pl-2 pr-5">
       <Nav>

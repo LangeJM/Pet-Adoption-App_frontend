@@ -1,14 +1,13 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { getPetsBySearchApi } from "../apis/apis";
 
 import {
-  ListGroup,
   Tab,
   Tabs,
   InputGroup,
   Button,
   FormControl,
-  Badge,
   DropdownButton,
   Dropdown,
   Container,
@@ -24,7 +23,15 @@ class SearchPage extends React.Component {
     super(props);
     this.state = {
       typeOfSearch: "basicSearch",
+      searchParams: {
+        type: "",
+        status: "",
+        height: "",
+        weight: "",
+        name: "",
+      },
       petsSearchResult: [],
+      petsArray: [],
     };
   }
 
@@ -36,7 +43,59 @@ class SearchPage extends React.Component {
     else this.setState({ typeOfSearch: "Basic Search" });
   }
 
+  handleSubmit(event) {
+    let queryString = "?";
+    const searchParams = this.state.searchParams;
+    event.preventDefault();
+
+    for (const key in searchParams) {
+      if (searchParams[key] !== "")
+        queryString = `${queryString}${key}=${searchParams[key]}&`;
+    }
+    // console.log(queryString);
+    getPetsBySearchApi(queryString)
+      .then((res) => {
+        this.setState({ petsArray: res.data.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // console.log(this.state.searchParams);
+  }
+  t;
+
+  handleOnChange = (event) => {
+    const id = event.target.id;
+    const value = event.target.value;
+    event.preventDefault();
+    if (id === "typeA" || id === "typeB") {
+      this.setState({
+        searchParams: { ...this.state.searchParams, type: value },
+      });
+    }
+    if (id === "status")
+      this.setState({
+        searchParams: { ...this.state.searchParams, status: value },
+      });
+    if (id === "height")
+      this.setState({
+        searchParams: { ...this.state.searchParams, height: value },
+      });
+    if (id === "weight")
+      this.setState({
+        searchParams: { ...this.state.searchParams, weight: value },
+      });
+    if (id === "name")
+      this.setState({
+        searchParams: { ...this.state.searchParams, name: value },
+      });
+  };
+
   render() {
+    let petsDeckVisibility = "invisible";
+    if (this.state.petsArray.length) petsDeckVisibility = "visible";
+
+    console.log(this.state.searchParams);
     if (this.props.userObject.email) {
       return (
         <div>
@@ -50,13 +109,16 @@ class SearchPage extends React.Component {
                 <Row className="mt-3">
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="typeB"
+                        // value={searchParams.type}
+                      />
 
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Type"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -70,7 +132,13 @@ class SearchPage extends React.Component {
                     </InputGroup>
                   </Col>
                   <Col md={1}>
-                    <Button size="sm">Search</Button>
+                    <Button
+                      size="sm"
+                      className="search-button"
+                      onClick={(event) => this.handleSubmit(event)}
+                    >
+                      Search
+                    </Button>
                   </Col>
                 </Row>
               </Container>
@@ -84,12 +152,14 @@ class SearchPage extends React.Component {
                 <Row className="mt-3">
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="typeA"
+                      />
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Type"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -104,13 +174,15 @@ class SearchPage extends React.Component {
                   </Col>
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="status"
+                      />
 
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Status"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -125,13 +197,15 @@ class SearchPage extends React.Component {
                   </Col>
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="height"
+                      />
 
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Height"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -149,13 +223,15 @@ class SearchPage extends React.Component {
                 <Row className="mt-3">
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="weight"
+                      />
 
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Weight"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -170,13 +246,15 @@ class SearchPage extends React.Component {
                   </Col>
                   <Col md={4}>
                     <InputGroup size="sm">
-                      <FormControl />
+                      <FormControl
+                        onInput={(event) => this.handleOnChange(event)}
+                        id="name"
+                      />
 
                       <DropdownButton
                         as={InputGroup.Append}
                         variant="outline-secondary"
                         title="Name"
-                        id="input-group-dropdown-2"
                         className="labelWidth"
                       >
                         <Dropdown.Item href="#">Action</Dropdown.Item>
@@ -189,8 +267,14 @@ class SearchPage extends React.Component {
                       </DropdownButton>
                     </InputGroup>
                   </Col>
-                  <Col md={1}>
-                    <Button size="sm">Search</Button>
+                  <Col md={4} d-flex>
+                    <Button
+                      size="sm"
+                      className="search-button mr-5 float-right"
+                      onClick={(event) => this.handleSubmit(event)}
+                    >
+                      Search
+                    </Button>
                   </Col>
                 </Row>
               </Container>
@@ -199,6 +283,11 @@ class SearchPage extends React.Component {
               </div>
             </Tab>
           </Tabs>
+          <div
+            className={`justify-content-center mt-5 border p-3 pb-0 bg-light ${petsDeckVisibility}`}
+          >
+            <PetCardsDeck petsArray={this.state.petsArray} />
+          </div>
         </div>
       );
     } else return <Redirect to="/" />;

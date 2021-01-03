@@ -1,3 +1,7 @@
-.labelWidth {
-  width: 4rem;
+.dropdown-toggle {
+  width: 5rem;
+}
+
+.search-button {
+  width: 6rem;
 }

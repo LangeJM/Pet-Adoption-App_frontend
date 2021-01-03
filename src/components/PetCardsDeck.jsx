@@ -7,13 +7,14 @@ const PetCardsDeck = (props) => {
   if (props.petsArray) {
     return (
       <CardDeck>
-        {props.petsArray.map((sample) => (
+        {props.petsArray.map((pet) => (
           <PetCard
-            image={sample.image}
-            name={sample.name}
-            breed={sample.breed}
-            status={sample.status}
-            key={sample._id}
+            image={pet.image}
+            name={pet.name}
+            breed={pet.breed}
+            status={pet.status}
+            id={pet._id}
+            key={pet._id}
           />
         ))}
       </CardDeck>

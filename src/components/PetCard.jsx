@@ -12,6 +12,10 @@ const PetCard = (props) => {
     return vowels.indexOf(word[0]) !== -1;
   }
 
+  function petsDetails(event) {
+    console.log(props);
+  }
+
   let indefiniteArticle = "";
   if (startsWithVowel(props.breed)) indefiniteArticle = "an";
   else indefiniteArticle = "a";
@@ -39,7 +43,11 @@ const PetCard = (props) => {
             {props.name} is {indefiniteArticle} {props.breed}. <br />
             Status: <b>{props.status}</b>.
           </Card.Text>
-          <Button className="mt-1 float-right" variant="primary">
+          <Button
+            className="mt-1 float-right"
+            variant="primary"
+            onClick={(event) => petsDetails(event)}
+          >
             More
           </Button>
         </Card.Body>
