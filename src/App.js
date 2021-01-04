@@ -36,13 +36,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // this.setState({ firstName: "Achim", lastName: "Kugel", isAdmin: true, isLoggedIn: false })
-    // const sessionId = JSON.stringify({ sessionId: this.state.sessionId })
     const sessionId = this.state.cookie
-    console.log(sessionId)
     getCurrentUserApi(sessionId)
       .then((res) => {
-        console.log(res.data)
         this.setState({userObject: res.data})
       })
         .catch((err) => {
@@ -70,7 +66,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     const { userObject,signInModalIsOpen, signUpModalIsOpen } = this.state;
     const headerVar = <Header
       isLoggedIn={!!userObject.email}
@@ -112,8 +107,7 @@ class App extends React.Component {
                    
               </Route>
               <Route exact path="/">
-                    <Homepage        
-                    />
+                    <Homepage userObject={this.state.userObject} />
               </Route>      
             </div>
             </div>

@@ -63,7 +63,10 @@ class Homepage extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <PetCardsDeck petsArray={this.state.petsRandomSample} />
+          <PetCardsDeck
+            petsArray={this.state.petsRandomSample}
+            userObject={this.props.userObject}
+          />
         </div>
       </div>
     );

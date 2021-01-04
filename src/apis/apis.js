@@ -94,4 +94,13 @@ export const createPetApi = (data) => {
         .catch((err) => console.log(err));
 }
 
+export const getPetById = (data) => { //NEEDS TO BE REWORKED
+    // console.log("apis: ",data)
+    return axios({
+        method: 'get',
+        url: baseUrl + '/pet/:' + data, //needs id param :id
+        // data: data
+    })
+}
+
 

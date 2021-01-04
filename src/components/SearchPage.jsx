@@ -44,9 +44,9 @@ class SearchPage extends React.Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     let queryString = "?";
     const searchParams = this.state.searchParams;
-    event.preventDefault();
 
     for (const key in searchParams) {
       if (searchParams[key] !== "")
@@ -97,6 +97,7 @@ class SearchPage extends React.Component {
 
     console.log(this.state.searchParams);
     if (this.props.userObject.email) {
+      console.log("there is a user email");
       return (
         <div>
           <Tabs
@@ -143,7 +144,10 @@ class SearchPage extends React.Component {
                 </Row>
               </Container>
               <div className="d-flex justify-content-center mt-3">
-                <PetCardsDeck />
+                <PetCardsDeck
+                  userObject={this.props.userObject}
+                  petsArray={this.state.petsSearchResult}
+                />
               </div>
             </Tab>
 
@@ -279,14 +283,20 @@ class SearchPage extends React.Component {
                 </Row>
               </Container>
               <div className="d-flex justify-content-center mt-3">
-                <PetCardsDeck petsArray={this.state.petsSearchResult} />
+                <PetCardsDeck
+                  userObject={this.props.userObject}
+                  petsArray={this.state.petsSearchResult}
+                />
               </div>
             </Tab>
           </Tabs>
           <div
             className={`justify-content-center mt-5 border p-3 pb-0 bg-light ${petsDeckVisibility}`}
           >
-            <PetCardsDeck petsArray={this.state.petsArray} />
+            <PetCardsDeck
+              petsArray={this.state.petsArray}
+              userObject={this.props.userObject}
+            />
           </div>
         </div>
       );

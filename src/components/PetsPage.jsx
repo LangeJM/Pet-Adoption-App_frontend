@@ -42,12 +42,18 @@ class PetsPage extends React.Component {
         >
           <Tab eventKey="myPets" title="My Pets">
             <div className="d-flex justify-content-center mt-3">
-              <PetCardsDeck petsArray={this.state.userPetsAdopted} />
+              <PetCardsDeck
+                petsArray={this.state.userPetsAdopted}
+                userObject={this.props.userObject}
+              />
             </div>
           </Tab>
           <Tab eventKey="savedPets" title="Saved Pets">
             <div className="d-flex justify-content-center mt-3">
-              <PetCardsDeck petsArray={this.state.userPetsSaved} />
+              <PetCardsDeck
+                petsArray={this.state.userPetsSaved}
+                userObject={this.props.userObject}
+              />
             </div>
           </Tab>
         </Tabs>
