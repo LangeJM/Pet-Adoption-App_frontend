@@ -7,6 +7,8 @@ const baseUrl = 'http://localhost:5000/api'
 
 
 
+
+
 export const createUserApi = (data) => {
     return axios({
         method: 'post',
@@ -101,6 +103,18 @@ export const getPetById = (data) => { //NEEDS TO BE REWORKED
         url: baseUrl + '/pet/:' + data, //needs id param :id
         // data: data
     })
+}
+
+export const updatePetApi = (data, id) => {
+    axios({
+        method: 'put',
+        url: `${baseUrl}/petUpdate?id=${id}`,
+        data: data
+    })
+        .then((res) => {
+            alert(res.data.message)
+        })
+        .catch((err) => console.log(err));
 }
 
 

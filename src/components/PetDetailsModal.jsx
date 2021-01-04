@@ -1,9 +1,9 @@
 import React from "react";
 import Modal from "react-modal";
 
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Card } from "react-bootstrap";
 
-import { createPetApi } from "../apis/apis";
+import { updatePetApi } from "../apis/apis";
 
 class PetDetailsModal extends React.Component {
   constructor(props) {
@@ -19,11 +19,10 @@ class PetDetailsModal extends React.Component {
       dietaryRestrictions: props.pet.pet.dietaryRestrictions,
       hypoallergenic: props.pet.pet.hypoallergenic,
       image: props.pet.pet.image,
-      imageName: props.pet.pet.imageName,
+      imageName: "",
       _id: props.pet.pet._id,
       savedBy: props.pet.pet.savedBy,
-      // fileTypeWarning: "",
-      isAdmin: props.userObject.isAdmin,
+      fileTypeWarning: "",
     };
 
     this.customStyles = {
@@ -83,27 +82,35 @@ class PetDetailsModal extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    // const data = new FormData();
-    // data.append("name", this.state.name);
-    // data.append("status", this.state.status);
-    // data.append("type", this.state.type);
-    // data.append("breed", this.state.breed);
-    // data.append("height", this.state.height);
-    // data.append("weight", this.state.weight);
-    // data.append("color", this.state.color);
-    // data.append("hypoallergenic", this.state.hypoallergenic);
-    // data.append("dietaryRestrictions", this.state.dietaryRestrictions);
-    // data.append("fosteredBy", this.state.fosteredBy);
-    // data.append("savedBy", this.state.savedBy);
-    // data.append("image", this.state.image);
-    // data.append("imageName", this.state.imageName);
-    // createPetApi(data);
+    let data;
+
+    if (this.state.imageName === "") data = this.state;
+    else {
+      data = new FormData();
+      data.append("name", this.state.name);
+      console.log(data);
+      console.log(this.state.name);
+      data.append("status", this.state.status);
+      data.append("type", this.state.type);
+      data.append("breed", this.state.breed);
+      data.append("height", this.state.height);
+      data.append("weight", this.state.weight);
+      data.append("color", this.state.color);
+      data.append("hypoallergenic", this.state.hypoallergenic);
+      data.append("dietaryRestrictions", this.state.dietaryRestrictions);
+      data.append("fosteredBy", this.state.fosteredBy);
+      data.append("savedBy", this.state.savedBy);
+      data.append("image", this.state.image);
+      data.append("imageName", this.state.imageName);
+    }
+    console.log(data);
+
+    alert("Sending off the API req");
+    updatePetApi(data, this.state._id);
   };
 
   render() {
-    console.log("Modal isAdmin: ", this.state.isAdmin);
-    console.log("Modal State: ", this.state);
-    console.log("Modal Props: ", this.props);
+    console.log(this.state.name);
     return (
       <div>
         <Modal
@@ -114,19 +121,30 @@ class PetDetailsModal extends React.Component {
           contentLabel="SignUpModal"
         >
           {/* <h2 className="mb-5">Pet Details</h2> */}
-          <div className="d-flex justify-content-center input-sm">
-            <img
-              src={this.state.image}
-              className="img-fluid"
-              style={{ width: "20rem" }}
-              alt="animal pet"
-            ></img>
+          <div className="d-flex justify-content-center">
+            <Card style={{ width: "20rem" }} className="overflow-hidden">
+              <div
+                className="overflow-hidden"
+                style={{
+                  width: "20rem",
+                  height: "14rem",
+                }}
+              >
+                <Card.Img
+                  src={this.state.image}
+                  variant="top"
+                  className="img-fluid"
+                  alt="animal pet"
+                ></Card.Img>
+              </div>
+            </Card>
           </div>
           <Form
             className="w-75 mt-5 ml-5"
             onSubmit={(event) => this.handleFormSubmit(event)}
+            style={{ fontSize: "90%" }}
           >
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petName">
                 <Form.Label column sm={4}>
                   Name
@@ -135,18 +153,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="text"
                     placeholder="E.g. Petsy"
+                    className="form-control-sm"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="30"
                     value={this.state.name}
                     onInput={(event) => this.handleOnChange(event)}
-                    readonly={!this.state.isAdmin}
-                    // readOnly={true} this is with grey background
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petStatus" className="mt-3">
                 <Form.Label column sm={4}>
                   Status
@@ -155,9 +173,11 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     as="select"
                     type="text"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     value={this.state.status}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   >
                     <option>Please select</option>
                     <option>Available</option>
@@ -168,7 +188,7 @@ class PetDetailsModal extends React.Component {
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petType" className="mt-3">
                 <Form.Label column sm={4}>
                   Type
@@ -177,16 +197,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="text"
                     placeholder="E.g. cat"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="30"
                     value={this.state.type}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petBreed" className="mt-3">
                 <Form.Label column sm={4}>
                   Breed
@@ -195,16 +217,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="text"
                     placeholder="E.g. Siamese"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="30"
                     value={this.state.breed}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petHeight" className="mt-3">
                 <Form.Label column sm={4}>
                   Height
@@ -213,16 +237,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="number"
                     placeholder="E.g. 30 cm"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="7"
                     value={this.state.height}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petWeight" className="mt-3">
                 <Form.Label column sm={4}>
                   Weight
@@ -231,16 +257,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="number"
                     placeholder="E.g. 30 kg"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="7"
                     value={this.state.weight}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petColor" className="mt-3">
                 <Form.Label column sm={4}>
                   Color
@@ -249,16 +277,18 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="text"
                     placeholder="E.g. white"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="20"
                     value={this.state.color}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="mb-4 text-left">
+            <div className="text-left">
               <Form.Group as={Row} controlId="petDiet" className="mt-3">
                 <Form.Label column sm={4}>
                   Dietary Restrictions
@@ -267,10 +297,12 @@ class PetDetailsModal extends React.Component {
                   <Form.Control
                     type="text"
                     placeholder="E.g. No nuts"
+                    readOnly={!this.props.userObject.isAdmin}
                     required
                     maxLength="30"
                     value={this.state.dietaryRestrictions}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
@@ -280,6 +312,7 @@ class PetDetailsModal extends React.Component {
               <Form.Group
                 as={Row}
                 controlId="petAllergies"
+                readOnly={!this.props.userObject.isAdmin}
                 className="mt-3 align-items-center"
               >
                 <Form.Label column sm={4}>
@@ -288,15 +321,17 @@ class PetDetailsModal extends React.Component {
                 <Col sm={8}>
                   <Form.Check
                     type="checkbox"
+                    readOnly={!this.props.userObject.isAdmin}
                     label="Check to confirm"
                     value={this.state.hypoallergenic}
                     onInput={(event) => this.handleOnChange(event)}
+                    className="form-control-sm"
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            {/* <div className="m-0 mb-4 text-left">
+            <div className="m-0 mb-4 text-left">
               <Form.Group as={Row} controlId="petImage" className="mb-0 mt-3">
                 <Form.Label column sm={4}>
                   Image
@@ -314,16 +349,20 @@ class PetDetailsModal extends React.Component {
               <Form.Label column sm={12} className="text-danger p-0 pt-1">
                 {this.state.fileTypeWarning}
               </Form.Label>
-            </div> */}
+            </div>
 
             <Form.Group as={Row}>
               <Col sm={{ span: 10, offset: 2 }}>
-                {this.state.isAdmin && (
-                  <Button className="float-right ml-2" type="submit">
+                {this.props.userObject.isAdmin && (
+                  <Button
+                    className="btn-danger float-right ml-2"
+                    type="submit"
+                    onClick={(event) => this.handleFormSubmit(event)}
+                  >
                     Update Pet
                   </Button>
                 )}
-                {this.state.isAdmin && (
+                {this.props.userObject.isAdmin && (
                   <Button
                     className="float-right ml-2"
                     onClick={this.props.petsDetails}
@@ -331,12 +370,14 @@ class PetDetailsModal extends React.Component {
                     Cancel
                   </Button>
                 )}
-                <Button
-                  className="float-right ml-2"
-                  onClick={this.props.petsDetails}
-                >
-                  Back
-                </Button>
+                {!this.props.userObject.isAdmin && (
+                  <Button
+                    className="float-right ml-2"
+                    onClick={this.props.petsDetails}
+                  >
+                    Back
+                  </Button>
+                )}
                 <Button className="float-right ml-2">Save</Button>
                 <Button className="float-right ml-2">Foster</Button>
               </Col>
