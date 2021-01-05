@@ -85,9 +85,9 @@ class SignInModal extends React.Component {
                 id="password"
               />
             </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
+            {/* <Form.Group controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Remember me" />
-            </Form.Group>
+            </Form.Group> */}
             <Button
               variant="primary"
               type="submit"

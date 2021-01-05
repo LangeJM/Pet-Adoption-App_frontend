@@ -3,36 +3,33 @@ import { Redirect } from "react-router-dom";
 
 import { Tabs, Tab } from "react-bootstrap";
 import PetCardsDeck from "./PetCardsDeck";
+import { getUserPetsApi } from "../apis/apis";
 
 class PetsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       key: "myPets",
-      userPetsAdopted: [
-        {
-          image:
-            "https://pet-images-itc.s3.us-east-2.amazonaws.com/image-1608985001421-cat.jpeg",
-          name: "Petsy",
-          breed: "Crossbreed",
-          status: "Available",
-          key: "5fe729aaabcad27facbbfe3d",
-        },
-      ],
-      userPetsSaved: [
-        {
-          image:
-            "https://pet-images-itc.s3.us-east-2.amazonaws.com/image-1608985001421-cat.jpeg",
-          name: "Petsy",
-          breed: "Crossbreed",
-          status: "Available",
-          key: "5fe729aaabcad27facbbfe3d",
-        },
-      ],
+      userPetsFostered: "",
+      userPetsSaved: "",
     };
+  }
+  componentDidMount() {
+    const { savedPets, fosteredPets } = this.props.userObject;
+    getUserPetsApi(fosteredPets)
+      .then((res) => {
+        this.setState({ userPetsFostered: res.data.data });
+      })
+      .catch((err) => console.log(err));
+    getUserPetsApi(savedPets)
+      .then((res) => {
+        this.setState({ userPetsSaved: res.data.data });
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
+    console.log("PetsPage State: ", this.state);
     if (this.props.userObject.email) {
       return (
         <Tabs
@@ -43,7 +40,7 @@ class PetsPage extends React.Component {
           <Tab eventKey="myPets" title="My Pets">
             <div className="d-flex justify-content-center mt-3">
               <PetCardsDeck
-                petsArray={this.state.userPetsAdopted}
+                petsArray={this.state.userPetsFostered}
                 userObject={this.props.userObject}
               />
             </div>

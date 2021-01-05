@@ -25,19 +25,6 @@ class PetDetailsModal extends React.Component {
       fileTypeWarning: "",
     };
 
-    this.customStyles = {
-      overlay: {
-        backgroundColor: "white",
-        opacity: 0.99,
-      },
-      content: {
-        top: "1%",
-        left: "25%",
-        right: "25%",
-        bottom: "1%",
-      },
-    };
-
     this.target = React.createRef(null);
 
     Modal.setAppElement("#root");
@@ -83,7 +70,6 @@ class PetDetailsModal extends React.Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
     let data;
-
     if (this.state.imageName === "") data = this.state;
     else {
       data = new FormData();
@@ -103,26 +89,50 @@ class PetDetailsModal extends React.Component {
       data.append("image", this.state.image);
       data.append("imageName", this.state.imageName);
     }
-    console.log(data);
-
-    alert("Sending off the API req");
     updatePetApi(data, this.state._id);
   };
 
   render() {
-    console.log(this.state.name);
+    const modalCustomStyles = {
+      overlay: {
+        backgroundColor: "white",
+        opacity: 0.99,
+      },
+      content: {
+        top: "1%",
+        left: "25%",
+        right: "25%",
+        bottom: "1%",
+      },
+    };
+
+    if (!this.props.userObject.isAdmin) {
+      modalCustomStyles.content.bottom = "10";
+    }
+
+    // Logic to change buttons based on user has pets
+    // console.log("render petDetailsModal: ", this.props.userObject.savedPets);
+    // if (
+    //   !this.props.userObject.savedPets.length // && this.props.userObject.savedPets.includes(!this.state._id)
+    // ) {
+    //   console.log("Not among saved Pets");
+    // }
+
     return (
       <div>
         <Modal
           isOpen={this.props.petDetailsModalIsOpen}
           onRequestClose={this.handleCloseModal}
           // shouldCloseOnOverlayClick={true}
-          style={this.customStyles}
+          style={modalCustomStyles}
           contentLabel="SignUpModal"
         >
           {/* <h2 className="mb-5">Pet Details</h2> */}
           <div className="d-flex justify-content-center">
-            <Card style={{ width: "20rem" }} className="overflow-hidden">
+            <Card
+              style={{ width: "20rem" }}
+              className="overflow-hidden border-0"
+            >
               <div
                 className="overflow-hidden"
                 style={{
@@ -321,17 +331,21 @@ class PetDetailsModal extends React.Component {
                 <Col sm={8}>
                   <Form.Check
                     type="checkbox"
-                    readOnly={!this.props.userObject.isAdmin}
                     label="Check to confirm"
                     value={this.state.hypoallergenic}
                     onInput={(event) => this.handleOnChange(event)}
                     className="form-control-sm"
+                    disabled={!this.props.userObject.isAdmin}
                   />
                 </Col>
               </Form.Group>
             </div>
 
-            <div className="m-0 mb-4 text-left">
+            <div
+              className={`m-0 mb-4 text-left ${
+                !this.props.userObject.isAdmin ? "d-none" : ""
+              }`}
+            >
               <Form.Group as={Row} controlId="petImage" className="mb-0 mt-3">
                 <Form.Label column sm={4}>
                   Image

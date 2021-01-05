@@ -117,4 +117,23 @@ export const updatePetApi = (data, id) => {
         .catch((err) => console.log(err));
 }
 
+export const updateUserApi = (data) => {
+    axios({
+        method: 'put',
+        url: `${baseUrl}/userUpdate`,
+        data: data
+    })
+        .then((res) => {
+            alert(res.data.message)
+        })
+        .catch((err) => console.log(err));
+}
+
+export const getUserPetsApi = (data) => {
+    return axios({
+        method: 'post',
+        url: baseUrl + '/userPets',
+        data: data
+    })
+}
 
