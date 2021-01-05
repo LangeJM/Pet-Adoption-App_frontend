@@ -29,7 +29,6 @@ class PetsPage extends React.Component {
   }
 
   render() {
-    console.log("PetsPage State: ", this.state);
     if (this.props.userObject.email) {
       return (
         <Tabs
