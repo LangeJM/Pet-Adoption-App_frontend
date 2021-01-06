@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 
-import { updatePetApi } from "../apis/apis";
+import { updatePetApi, updateUserPetsApi } from "../apis/apis";
 
 class PetDetailsModal extends React.Component {
   constructor(props) {
@@ -23,6 +23,9 @@ class PetDetailsModal extends React.Component {
       _id: props.pet.pet._id,
       savedBy: props.pet.pet.savedBy,
       fileTypeWarning: "",
+      savedPets: props.userObject.savedPets,
+      fosteredPets: props.userObject.fosteredPets,
+      userId: props.userObject._id,
     };
 
     this.target = React.createRef(null);
@@ -74,8 +77,6 @@ class PetDetailsModal extends React.Component {
     else {
       data = new FormData();
       data.append("name", this.state.name);
-      console.log(data);
-      console.log(this.state.name);
       data.append("status", this.state.status);
       data.append("type", this.state.type);
       data.append("breed", this.state.breed);
@@ -91,6 +92,56 @@ class PetDetailsModal extends React.Component {
     }
     updatePetApi(data, this.state._id);
   };
+
+  handleOnSave(event) {
+    event.preventDefault();
+    let savedPetsArray = this.state.savedPets;
+    savedPetsArray.push(this.state._id);
+    const apiObject = { id: this.state.userId, savedPets: savedPetsArray };
+    this.setState({ savedPets: savedPetsArray });
+    updateUserPetsApi(apiObject);
+    this.props.onUserPetsChange();
+  }
+
+  handleOnUnSave(event) {
+    event.preventDefault();
+    let savedPetsArray = this.state.savedPets;
+    savedPetsArray = savedPetsArray.filter((pet) => pet !== this.state._id);
+    this.setState({ savedPets: savedPetsArray });
+    const apiObject = { id: this.state.userId, savedPets: savedPetsArray };
+    // Inspiration here: https://stackoverflow.com/questions/14763721/mongoose-delete-array-element-in-document-and-save
+    updateUserPetsApi(apiObject);
+    this.props.onUserPetsChange();
+  }
+
+  handleOnFoster(event) {
+    event.preventDefault();
+    let fosteredPetsArray = this.state.fosteredPets;
+    fosteredPetsArray.push(this.state._id);
+    const apiObject = {
+      id: this.state.userId,
+      fosteredPets: fosteredPetsArray,
+    };
+    this.setState({ fosteredPets: fosteredPetsArray });
+    updateUserPetsApi(apiObject);
+    this.props.onUserPetsChange();
+  }
+
+  handleOnUnFoster(event) {
+    event.preventDefault();
+    let fosteredPetsArray = this.state.fosteredPets;
+    fosteredPetsArray = fosteredPetsArray.filter(
+      (pet) => pet !== this.state._id
+    );
+    this.setState({ fosteredPets: fosteredPetsArray });
+    const apiObject = {
+      id: this.state.userId,
+      fosteredPets: fosteredPetsArray,
+    };
+    // Inspiration here: https://stackoverflow.com/questions/14763721/mongoose-delete-array-element-in-document-and-save
+    updateUserPetsApi(apiObject);
+    this.props.onUserPetsChange();
+  }
 
   render() {
     const modalCustomStyles = {
@@ -110,24 +161,26 @@ class PetDetailsModal extends React.Component {
       modalCustomStyles.content.bottom = "10";
     }
 
-    // Logic to change buttons based on user has pets
-    // console.log("render petDetailsModal: ", this.props.userObject.savedPets);
-    // if (
-    //   !this.props.userObject.savedPets.length // && this.props.userObject.savedPets.includes(!this.state._id)
-    // ) {
-    //   console.log("Not among saved Pets");
-    // }
+    const { savedPets, fosteredPets } = this.props.userObject;
+    let statusSaved = false;
+
+    if (savedPets && savedPets.includes(this.state._id)) statusSaved = true;
+    else statusSaved = false;
+
+    let statusFostered = false;
+    if (fosteredPets && fosteredPets.includes(this.state._id))
+      statusFostered = true;
+    else statusFostered = false;
 
     return (
       <div>
         <Modal
           isOpen={this.props.petDetailsModalIsOpen}
           onRequestClose={this.handleCloseModal}
-          // shouldCloseOnOverlayClick={true}
+          // shouldCloseOnOverlayClick={true} Does not work since the parent component is the pet card which is being covered by the modal completely
           style={modalCustomStyles}
           contentLabel="SignUpModal"
         >
-          {/* <h2 className="mb-5">Pet Details</h2> */}
           <div className="d-flex justify-content-center">
             <Card
               style={{ width: "20rem" }}
@@ -392,8 +445,38 @@ class PetDetailsModal extends React.Component {
                     Back
                   </Button>
                 )}
-                <Button className="float-right ml-2">Save</Button>
-                <Button className="float-right ml-2">Foster</Button>
+                {!statusSaved && (
+                  <Button
+                    className="float-right ml-2"
+                    onClick={(event) => this.handleOnSave(event)}
+                  >
+                    Save
+                  </Button>
+                )}
+                {statusSaved && (
+                  <Button
+                    className="float-right ml-2"
+                    onClick={(event) => this.handleOnUnSave(event)}
+                  >
+                    Un-Save
+                  </Button>
+                )}
+                {!statusFostered && (
+                  <Button
+                    className="float-right ml-2"
+                    onClick={(event) => this.handleOnFoster(event)}
+                  >
+                    Foster
+                  </Button>
+                )}
+                {statusFostered && (
+                  <Button
+                    className="float-right ml-2"
+                    onClick={(event) => this.handleOnUnFoster(event)}
+                  >
+                    Un-Foster
+                  </Button>
+                )}
               </Col>
             </Form.Group>
           </Form>

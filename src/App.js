@@ -31,11 +31,14 @@ class App extends React.Component {
       },
       userObject: {
       }
-
     }
   }
 
   componentDidMount() {
+    this.updateUserData()
+  }
+
+  updateUserData() {
     const sessionId = this.state.cookie
     getCurrentUserApi(sessionId)
       .then((res) => {
@@ -44,7 +47,6 @@ class App extends React.Component {
         .catch((err) => {
             console.log(err)
         })
-    
   }
   
   handleLogin(event) {
@@ -99,11 +101,13 @@ class App extends React.Component {
                     
               </Route>
               <Route path="/search">
-                <SearchPage userObject={this.state.userObject}/>
+                  <SearchPage userObject={this.state.userObject}
+                  onUserPetsChange={() => this.updateUserData()}/>
                     
               </Route>
               <Route path="/pets">
-                <PetsPage userObject={this.state.userObject}/>
+                  <PetsPage userObject={this.state.userObject}
+                  onUserPetsChange={() => this.updateUserData()}/>
                    
               </Route>
               <Route exact path="/">

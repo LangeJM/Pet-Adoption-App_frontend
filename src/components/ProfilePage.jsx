@@ -31,13 +31,10 @@ class ProfilePage extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-
-    console.log("Sending off the API req: ", this.state);
     updateUserApi(this.state);
   };
 
   render() {
-    // console.log(this.state);
     if (this.props.userObject.email) {
       return (
         <Tabs activeKey={"profile"}>
@@ -48,15 +45,16 @@ class ProfilePage extends React.Component {
             >
               <div className="mb-5 text-left">
                 <Form.Group as={Row} controlId="profileFirstName">
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     First name
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       type="text"
                       placeholder="First name"
                       required
                       value={this.state.firstName}
+                      onInput={(event) => this.handleOnChange(event)}
                       className="ml-3"
                     />
                   </Col>
@@ -69,10 +67,10 @@ class ProfilePage extends React.Component {
                   controlId="profileLastName"
                   className="mt-3"
                 >
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Last name
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       type="text"
                       placeholder="Last name"
@@ -87,10 +85,10 @@ class ProfilePage extends React.Component {
 
               <div className="mb-5 text-left">
                 <Form.Group as={Row} controlId="profileEmail" className="mt-3">
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Email
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       type="email"
                       placeholder="Email address"
@@ -105,10 +103,10 @@ class ProfilePage extends React.Component {
 
               <div className="mb-5 text-left">
                 <Form.Group as={Row} controlId="profilePhone" className="mt-3">
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Phone
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       type="tel"
                       placeholder="Phone number"
@@ -127,10 +125,10 @@ class ProfilePage extends React.Component {
                   controlId="profilePassword"
                   className="mt-3"
                 >
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Password
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       type="password"
                       placeholder="***************"
@@ -144,10 +142,10 @@ class ProfilePage extends React.Component {
 
               <div className="mb-5 text-left">
                 <Form.Group as={Row} controlId="profileBio" className="mt-3">
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Bio
                   </Form.Label>
-                  <Col sm={10}>
+                  <Col sm={9}>
                     <Form.Control
                       as="textarea"
                       rows={5}
@@ -161,7 +159,7 @@ class ProfilePage extends React.Component {
               </div>
 
               <Form.Group as={Row}>
-                <Col sm={{ span: 10, offset: 2 }}>
+                <Col sm={{ span: 9, offset: 3 }}>
                   <Button className="float-right" type="submit">
                     Save changes
                   </Button>

@@ -14,7 +14,6 @@ class AdminPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.userObject);
     if (this.props.userObject.isAdmin) {
       return (
         <Tabs
@@ -23,7 +22,7 @@ class AdminPage extends React.Component {
           onSelect={(k) => this.setState({ key: k })}
         >
           <Tab eventKey="addPets" title="Add Pets">
-            <div className="d-flex justify-content-center mt-3"></div>
+            <div className="d-flex justify-content-center"></div>
             <AdminAddPets />
           </Tab>
           <Tab eventKey="adminDashboardPets" title="Dashboard Pets">

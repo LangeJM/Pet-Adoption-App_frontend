@@ -8,7 +8,11 @@ const PetCardsDeck = (props) => {
     return (
       <CardDeck>
         {props.petsArray.map((pet) => (
-          <PetCard pet={pet} userObject={props.userObject} />
+          <PetCard
+            pet={pet}
+            userObject={props.userObject}
+            onUserPetsChange={props.onUserPetsChange}
+          />
         ))}
       </CardDeck>
     );

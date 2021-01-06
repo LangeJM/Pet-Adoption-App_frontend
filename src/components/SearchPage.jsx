@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { getPetsBySearchApi } from "../apis/apis";
+import Cookies from "js-cookie";
 
 import {
   Tab,
@@ -52,7 +53,6 @@ class SearchPage extends React.Component {
       if (searchParams[key] !== "")
         queryString = `${queryString}${key}=${searchParams[key]}&`;
     }
-    // console.log(queryString);
     getPetsBySearchApi(queryString)
       .then((res) => {
         this.setState({ petsArray: res.data.data });
@@ -60,7 +60,6 @@ class SearchPage extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-    // console.log(this.state.searchParams);
   }
   t;
 
@@ -95,9 +94,8 @@ class SearchPage extends React.Component {
     let petsDeckVisibility = "invisible";
     if (this.state.petsArray.length) petsDeckVisibility = "visible";
 
-    console.log(this.state.searchParams);
-    if (this.props.userObject.email) {
-      console.log("there is a user email");
+    // if (this.props.userObject.email) { // More secure but need to wait
+    if (Cookies.get("I-Pets")) {
       return (
         <div>
           <Tabs
@@ -113,7 +111,6 @@ class SearchPage extends React.Component {
                       <FormControl
                         onInput={(event) => this.handleOnChange(event)}
                         id="typeB"
-                        // value={searchParams.type}
                       />
 
                       <DropdownButton
@@ -271,7 +268,7 @@ class SearchPage extends React.Component {
                       </DropdownButton>
                     </InputGroup>
                   </Col>
-                  <Col md={4} d-flex>
+                  <Col md={4}>
                     <Button
                       size="sm"
                       className="search-button mr-5 float-right"
@@ -286,6 +283,7 @@ class SearchPage extends React.Component {
                 <PetCardsDeck
                   userObject={this.props.userObject}
                   petsArray={this.state.petsSearchResult}
+                  onUserPetsChange={this.props.onUserPetsChange}
                 />
               </div>
             </Tab>
@@ -296,11 +294,15 @@ class SearchPage extends React.Component {
             <PetCardsDeck
               petsArray={this.state.petsArray}
               userObject={this.props.userObject}
+              onUserPetsChange={this.props.onUserPetsChange}
             />
           </div>
         </div>
       );
-    } else return <Redirect to="/" />;
+    } else {
+      alert("SEARCH PAGE, NOOOOO USER OBJECT!!!");
+      return <Redirect to="/" />;
+    }
   }
 }
 

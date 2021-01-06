@@ -21,8 +21,6 @@ class Homepage extends React.Component {
   }
 
   render() {
-    // console.log("Hallo");
-    // console.log(this.state);
     return (
       <div className="m-3">
         <div className="mb-5">

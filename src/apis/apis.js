@@ -75,11 +75,9 @@ export const getPetsSampleApi = (data) => {
 }
 
 export const getPetsBySearchApi = (data) => {
-    // console.log("apis: ",data)
     return axios({
         method: 'get',
         url: baseUrl + '/petsSearch' + data,
-        // data: data
     })
 }
 
@@ -96,12 +94,10 @@ export const createPetApi = (data) => {
         .catch((err) => console.log(err));
 }
 
-export const getPetById = (data) => { //NEEDS TO BE REWORKED
-    // console.log("apis: ",data)
+export const getPetById = (data) => { 
     return axios({
         method: 'get',
-        url: baseUrl + '/pet/:' + data, //needs id param :id
-        // data: data
+        url: baseUrl + '/pet/:' + data
     })
 }
 
@@ -125,6 +121,18 @@ export const updateUserApi = (data) => {
     })
         .then((res) => {
             alert(res.data.message)
+        })
+        .catch((err) => console.log(err));
+}
+
+export const updateUserPetsApi = (data) => {
+    axios({
+        method: 'post',
+        url: `${baseUrl}/userPetsUpdate`,
+        data: data
+    })
+        .then((res) => {
+            console.log(res.data.message)
         })
         .catch((err) => console.log(err));
 }

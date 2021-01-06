@@ -41,6 +41,7 @@ class PetsPage extends React.Component {
               <PetCardsDeck
                 petsArray={this.state.userPetsFostered}
                 userObject={this.props.userObject}
+                onUserPetsChange={this.props.onUserPetsChange}
               />
             </div>
           </Tab>
@@ -49,6 +50,7 @@ class PetsPage extends React.Component {
               <PetCardsDeck
                 petsArray={this.state.userPetsSaved}
                 userObject={this.props.userObject}
+                onUserPetsChange={this.props.onUserPetsChange}
               />
             </div>
           </Tab>

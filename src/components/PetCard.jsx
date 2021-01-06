@@ -5,8 +5,6 @@ import PetDetailsModal from "./PetDetailsModal";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-import "./PetCard.css";
-
 class PetCard extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +25,9 @@ class PetCard extends React.Component {
       alert(
         `Please log in or sign up a new account to see details and adopt pets!`
       );
-    } else {
+    }
+    if (window.location.pathname === "/") window.location.assign("/search");
+    else {
       if (this.state.petDetailsModalIsOpen)
         this.setState({ petDetailsModalIsOpen: false });
       else this.setState({ petDetailsModalIsOpen: true });
@@ -35,7 +35,6 @@ class PetCard extends React.Component {
   }
 
   render() {
-    console.log(this.props.userObject);
     const { pet } = this.props;
     let indefiniteArticle = "";
 
@@ -82,6 +81,7 @@ class PetCard extends React.Component {
           petDetailsModalIsOpen={this.state.petDetailsModalIsOpen}
           petsDetails={(event) => this.petsDetails(event)}
           userObject={this.props.userObject}
+          onUserPetsChange={this.props.onUserPetsChange}
         />
       </div>
     );

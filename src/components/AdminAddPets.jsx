@@ -57,7 +57,6 @@ class AdminAddPets extends React.Component {
         });
       }
     }
-    // console.log(this.state); Delete!!!
   };
 
   handleFormSubmit = (event) => {
@@ -95,10 +94,10 @@ class AdminAddPets extends React.Component {
       >
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petName">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Name
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="text"
                 placeholder="E.g. Petsy"
@@ -113,10 +112,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petStatus" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Status
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 as="select"
                 type="text"
@@ -135,10 +134,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petType" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Type
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="text"
                 placeholder="E.g. cat"
@@ -153,10 +152,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petBreed" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Breed
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="text"
                 placeholder="E.g. Siamese"
@@ -171,10 +170,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petHeight" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Height
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="number"
                 placeholder="E.g. 30 cm"
@@ -189,10 +188,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petWeight" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Weight
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="number"
                 placeholder="E.g. 30 kg"
@@ -207,10 +206,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petColor" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Color
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="text"
                 placeholder="E.g. white"
@@ -225,10 +224,10 @@ class AdminAddPets extends React.Component {
 
         <div className="mb-4 text-left">
           <Form.Group as={Row} controlId="petDiet" className="mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Dietary Restrictions
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Control
                 type="text"
                 placeholder="E.g. No nuts"
@@ -247,10 +246,10 @@ class AdminAddPets extends React.Component {
             controlId="petAllergies"
             className="mt-3 align-items-center"
           >
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Hypoallergenic
             </Form.Label>
-            <Col sm={8}>
+            <Col sm={9}>
               <Form.Check
                 type="checkbox"
                 label="Check to confirm"
@@ -263,7 +262,7 @@ class AdminAddPets extends React.Component {
 
         <div className="m-0 mb-4 text-left">
           <Form.Group as={Row} controlId="petImage" className="mb-0 mt-3">
-            <Form.Label column sm={4}>
+            <Form.Label column sm={3}>
               Image
             </Form.Label>
             <Form.File
