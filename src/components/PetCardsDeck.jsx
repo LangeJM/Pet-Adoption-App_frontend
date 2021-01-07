@@ -9,6 +9,7 @@ const PetCardsDeck = (props) => {
       <CardDeck>
         {props.petsArray.map((pet) => (
           <PetCard
+            key={pet._id}
             pet={pet}
             userObject={props.userObject}
             onUserPetsChange={props.onUserPetsChange}

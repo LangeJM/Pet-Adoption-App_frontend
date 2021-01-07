@@ -120,7 +120,7 @@ export const updateUserApi = (data) => {
         data: data
     })
         .then((res) => {
-            alert(res.data.message)
+            console.log(res.data.message)
         })
         .catch((err) => console.log(err));
 }

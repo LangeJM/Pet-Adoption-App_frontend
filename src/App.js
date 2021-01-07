@@ -29,7 +29,7 @@ class App extends React.Component {
       cookie: {
         sessionId: Cookies.get("I-Pets")
       },
-      userObject: {
+      userObject: {updating: true
       }
     }
   }

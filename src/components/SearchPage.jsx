@@ -33,6 +33,7 @@ class SearchPage extends React.Component {
       },
       petsSearchResult: [],
       petsArray: [],
+      noResultsForSearch: false,
     };
   }
 
@@ -55,9 +56,17 @@ class SearchPage extends React.Component {
     }
     getPetsBySearchApi(queryString)
       .then((res) => {
-        this.setState({ petsArray: res.data.data });
+        if (!res.data.success) {
+          this.setState({ petsArray: [] });
+          this.setState({ noResultsForSearch: true });
+        } else {
+          this.setState({ petsArray: res.data.data });
+          this.setState({ noResultsForSearch: false });
+        }
       })
       .catch((err) => {
+        this.setState({ petsArray: [] });
+        this.setState({ noResultsForSearch: true });
         console.log(err);
       });
   }
@@ -65,7 +74,8 @@ class SearchPage extends React.Component {
 
   handleOnChange = (event) => {
     const id = event.target.id;
-    const value = event.target.value;
+    let value = event.target.value;
+    value = value.charAt(0).toUpperCase() + value.slice(1);
     event.preventDefault();
     if (id === "typeA" || id === "typeB") {
       this.setState({
@@ -88,14 +98,17 @@ class SearchPage extends React.Component {
       this.setState({
         searchParams: { ...this.state.searchParams, name: value },
       });
+    console.log(this.state.searchParams);
   };
 
   render() {
+    while (!this.props.userObject) {
+      // Waiting for props to come in from parent
+    }
     let petsDeckVisibility = "invisible";
     if (this.state.petsArray.length) petsDeckVisibility = "visible";
 
-    // if (this.props.userObject.email) { // More secure but need to wait
-    if (Cookies.get("I-Pets")) {
+    if (Cookies.get("I-Pets") && this.props.userObject) {
       return (
         <div>
           <Tabs
@@ -141,10 +154,14 @@ class SearchPage extends React.Component {
                 </Row>
               </Container>
               <div className="d-flex justify-content-center mt-3">
-                <PetCardsDeck
-                  userObject={this.props.userObject}
-                  petsArray={this.state.petsSearchResult}
-                />
+                {!this.state.noResultsForSearch ? (
+                  <PetCardsDeck
+                    userObject={this.props.userObject}
+                    petsArray={this.state.petsSearchResult}
+                  />
+                ) : (
+                  <div className="mt-5">No results found for your search</div>
+                )}
               </div>
             </Tab>
 
@@ -300,7 +317,7 @@ class SearchPage extends React.Component {
         </div>
       );
     } else {
-      alert("SEARCH PAGE, NOOOOO USER OBJECT!!!");
+      alert("Hi There");
       return <Redirect to="/" />;
     }
   }

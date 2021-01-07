@@ -91,6 +91,7 @@ class PetDetailsModal extends React.Component {
       data.append("imageName", this.state.imageName);
     }
     updatePetApi(data, this.state._id);
+    alert("Pet has been updated!");
   };
 
   handleOnSave(event) {
@@ -124,6 +125,7 @@ class PetDetailsModal extends React.Component {
     };
     this.setState({ fosteredPets: fosteredPetsArray });
     updateUserPetsApi(apiObject);
+    updatePetApi({ status: "Fostered" }, this.state._id);
     this.props.onUserPetsChange();
   }
 
@@ -140,6 +142,7 @@ class PetDetailsModal extends React.Component {
     };
     // Inspiration here: https://stackoverflow.com/questions/14763721/mongoose-delete-array-element-in-document-and-save
     updateUserPetsApi(apiObject);
+    updatePetApi({ status: "Available" }, this.state._id);
     this.props.onUserPetsChange();
   }
 
@@ -163,14 +166,19 @@ class PetDetailsModal extends React.Component {
 
     const { savedPets, fosteredPets } = this.props.userObject;
     let statusSaved = false;
+    let statusFostered = false;
+    let buttonFosteredDisabled = false;
 
     if (savedPets && savedPets.includes(this.state._id)) statusSaved = true;
     else statusSaved = false;
 
-    let statusFostered = false;
-    if (fosteredPets && fosteredPets.includes(this.state._id))
+    if (fosteredPets && fosteredPets.includes(this.state._id)) {
       statusFostered = true;
-    else statusFostered = false;
+      buttonFosteredDisabled = false;
+    }
+    if (this.state.status === "Fostered" && statusFostered === false) {
+      buttonFosteredDisabled = true;
+    }
 
     return (
       <div>
@@ -465,6 +473,7 @@ class PetDetailsModal extends React.Component {
                   <Button
                     className="float-right ml-2"
                     onClick={(event) => this.handleOnFoster(event)}
+                    disabled={buttonFosteredDisabled}
                   >
                     Foster
                   </Button>

@@ -14,6 +14,9 @@ class AdminPage extends React.Component {
   }
 
   render() {
+    while (!this.props.userObject) {
+      // Waiting for props to come in from parent
+    }
     if (this.props.userObject.isAdmin) {
       return (
         <Tabs
