@@ -24,47 +24,74 @@ class Homepage extends React.Component {
     return (
       <div className="m-3">
         <div className="mb-5">
-          <h2 className="mb-3">Welcome to I-Pets</h2>
-          <div className="text-left">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-              eget est dictum, sodales mauris et, tincidunt sem. Duis tempor,
-              diam ac luctus cursus, justo ex iaculis magna, ut dignissim elit
-              libero a magna. Donec semper lacinia nulla, sed venenatis nunc
-              condimentum a. Morbi a nulla egestas, facilisis dolor eget, porta
-              dolor. Praesent at lacinia ex.
+          <h1
+            className="ml-5 pl-5 mt-5 text-left font-italic"
+            style={{ color: "#000f70" }}
+          >
+            Find your new best friend today!
+          </h1>
+          <img
+            src={
+              "https://pet-images-itc.s3.us-east-2.amazonaws.com/Pets-Homepage.png"
+            }
+            className="img-fluid mb-5"
+            alt="Group of pets"
+          />
+
+          <div className="text-left mx-5 px-5">
+            <p className="font-weight-bold" style={{ color: "#000f70" }}>
+              Adopting a pet will make you feel better
             </p>
             <p>
-              Vivamus scelerisque hendrerit egestas. Morbi tristique ante non
-              aliquet cursus. Suspendisse dui nisl, malesuada quis enim ac,
-              accumsan ultrices justo. Aliquam at erat lectus. Cras lobortis sem
-              quis sem vulputate facilisis. Curabitur ante leo, fermentum eu
-              nisi id, hendrerit elementum dolor. Mauris ut erat in risus
-              consectetur imperdiet quis eu sem. Proin diam nisl, egestas ut
-              venenatis eleifend, tempor ac felis. Integer lectus elit,
-              vestibulum vel fringilla eget, vulputate vitae erat.
+              Pets have a way of putting a smile on your face and a spring in
+              your step. Not only do animals give you unconditional love, but
+              research confirms that pets provide us humans with psychological,
+              emotional, and physical benefits. Caring for a companion animal
+              can provide a sense of purpose and fulfillment as well as lessen
+              feelings of loneliness and isolation in all age groups.
+            </p>
+            <p className="font-weight-bold" style={{ color: "#000f70" }}>
+              You will save a life
             </p>
             <p>
-              Vestibulum in dui blandit, vestibulum turpis in, maximus velit.
-              Praesent a scelerisque ex. Fusce a erat lorem. Donec risus lacus,
-              sollicitudin vel faucibus in, vulputate in magna. Maecenas
-              vulputate facilisis augue, ac lobortis orci lacinia volutpat.
-              Nullam vulputate faucibus tellus vitae egestas. Maecenas aliquam
-              tortor sit amet felis rhoncus aliquam. Fusce non ornare arcu. Duis
-              in dolor elit. Duis non lorem in lorem semper commodo id vel quam.
-              Mauris finibus sapien facilisis imperdiet porta. Morbi consectetur
-              tristique semper. Ut dictum erat non felis facilisis aliquet.
-              Maecenas a dignissim felis. Nullam vel imperdiet diam, vel
-              suscipit mauris. Etiam fermentum aliquam neque in sodales. Sed
-              fringilla aliquam ex at feugiat.
+              Each year millions of pets are euthanized because too few people
+              adopt from shelters. The number of euthanized animals could be
+              reduced dramatically if more people adopted pets instead of buying
+              them. By adopting from a humane society or private animal shelter
+              such as
+              <a className="" href="/">
+                {" I-Pets "}
+              </a>
+              you will help save the lives of two animals – the pet you adopt,
+              and a homeless animal somewhere who can be rescued because of the
+              space you helped free up.
+            </p>
+            <p className="font-weight-bold" style={{ color: "#000f70" }}>
+              When you adopt, you get a healthy pet
+            </p>
+            <p>
+              Animal shelters are brimming with happy, healthy animals just
+              waiting for someone to take them home. At
+              <a className="" href="/">
+                {" I-Pets "}
+              </a>
+              we examine, vaccinate, spay or neuter and microchip all of our
+              pets prior to adoption. In addition to medical care, we also
+              screen animals for specific temperaments and behaviors to make
+              sure each family finds the right pet for its lifestyle.
             </p>
           </div>
         </div>
-        <div className="d-flex justify-content-center">
-          <PetCardsDeck
-            petsArray={this.state.petsRandomSample}
-            userObject={this.props.userObject}
-          />
+        <div>
+          <h3 className="text-left font-italic mb-4 ml-5 pl-5">
+            Meet our pets:
+          </h3>
+          <div className="d-flex justify-content-center">
+            <PetCardsDeck
+              petsArray={this.state.petsRandomSample}
+              userObject={this.props.userObject}
+            />
+          </div>
         </div>
       </div>
     );

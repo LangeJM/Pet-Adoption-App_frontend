@@ -21,11 +21,11 @@ class PetCard extends React.Component {
   }
 
   petsDetails(event) {
-    if (!this.props.userObject.email) {
-      alert(
-        `Please log in or sign up a new account to see details and adopt pets!`
-      );
-    }
+    // if (this.state.userObject.email === "") {
+    //   alert(
+    //     `Please log in or sign up a new account to see details and adopt pets!`
+    //   );
+    // }
     if (window.location.pathname === "/") window.location.assign("/search");
     else {
       if (this.state.petDetailsModalIsOpen)
@@ -72,9 +72,6 @@ class PetCard extends React.Component {
               More
             </Button>
           </Card.Body>
-          {/* <Card.Body>
-          <Card.Link href="#">More</Card.Link>
-        </Card.Body> */}
         </Card>
         <PetDetailsModal
           pet={this.state.props}

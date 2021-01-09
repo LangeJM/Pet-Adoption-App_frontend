@@ -5,8 +5,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { loginUserApi } from "../apis/apis";
 
-import Cookies from "js-cookie";
-
 class SignInModal extends React.Component {
   constructor(props) {
     super(props);

@@ -53,19 +53,35 @@ const Header = (props) => {
           <Image className="logo column" src={logo} />
         </Link>
       </Nav>
-      <div className="mr-5 ml-5 welcome-blurb">{welcomeBlurb}</div>
+      <div
+        className="mr-5 ml-5 welcome-blurb font-italic"
+        style={{ color: "#85e0ff", fontSize: "1.1rem" }}
+      >
+        {welcomeBlurb}
+      </div>
       <Nav className="mr-auto">
-        <Link className={`m-2 ${myPetsVisibility}`} to="/pets" href="#pets">
+        <Link
+          className={`m-2 ${myPetsVisibility}`}
+          to="/pets"
+          href="#pets"
+          style={{ color: "white" }}
+        >
           <strong>My Pets</strong>
         </Link>
         <Link
           className={`m-2 ${myProfileVisibility}`}
           to="/profile"
           href="#profile"
+          style={{ color: "white" }}
         >
           <strong>My Profile</strong>
         </Link>
-        <Link className={`m-2 ${adminVisibility}`} to="/admin" href="#admin">
+        <Link
+          className={`m-2 ${adminVisibility}`}
+          to="/admin"
+          href="#admin"
+          style={{ color: "white" }}
+        >
           <strong>Admin</strong>
         </Link>
       </Nav>

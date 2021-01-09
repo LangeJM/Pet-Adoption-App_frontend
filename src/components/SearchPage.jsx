@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { getPetsBySearchApi } from "../apis/apis";
-import Cookies from "js-cookie";
 
 import {
   Tab,
@@ -37,6 +36,11 @@ class SearchPage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getPetsApi("?");
+    console.log(this.state.petsArray);
+  }
+
   switchTypeOfSearch(event) {
     let { typeOfSearch } = this.state;
     event.preventDefault();
@@ -54,6 +58,10 @@ class SearchPage extends React.Component {
       if (searchParams[key] !== "")
         queryString = `${queryString}${key}=${searchParams[key]}&`;
     }
+    this.getPetsApi(queryString);
+  }
+
+  getPetsApi(queryString) {
     getPetsBySearchApi(queryString)
       .then((res) => {
         if (!res.data.success) {
@@ -70,7 +78,6 @@ class SearchPage extends React.Component {
         console.log(err);
       });
   }
-  t;
 
   handleOnChange = (event) => {
     const id = event.target.id;
@@ -102,13 +109,15 @@ class SearchPage extends React.Component {
   };
 
   render() {
-    while (!this.props.userObject) {
+    console.log("Search Page Redner User Object: ", this.props.userObject);
+    while (!this.props.userObject || this.props.userObject === undefined) {
       // Waiting for props to come in from parent
+      console.log("No User Object!!!");
     }
     let petsDeckVisibility = "invisible";
     if (this.state.petsArray.length) petsDeckVisibility = "visible";
 
-    if (Cookies.get("I-Pets") && this.props.userObject) {
+    if (this.props.userObject.email) {
       return (
         <div>
           <Tabs
@@ -132,13 +141,10 @@ class SearchPage extends React.Component {
                         title="Type"
                         className="labelWidth"
                       >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
+                        <Dropdown.Item>Cat</Dropdown.Item>
+                        <Dropdown.Item>Dog</Dropdown.Item>
+                        <Dropdown.Item>Crocodile</Dropdown.Item>
+                        <Dropdown.Item>Mouse</Dropdown.Item>
                       </DropdownButton>
                     </InputGroup>
                   </Col>
@@ -179,15 +185,7 @@ class SearchPage extends React.Component {
                         variant="outline-secondary"
                         title="Type"
                         className="labelWidth"
-                      >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                      </DropdownButton>
+                      ></DropdownButton>
                     </InputGroup>
                   </Col>
                   <Col md={4}>
@@ -202,15 +200,7 @@ class SearchPage extends React.Component {
                         variant="outline-secondary"
                         title="Status"
                         className="labelWidth"
-                      >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                      </DropdownButton>
+                      ></DropdownButton>
                     </InputGroup>
                   </Col>
                   <Col md={4}>
@@ -225,15 +215,7 @@ class SearchPage extends React.Component {
                         variant="outline-secondary"
                         title="Height"
                         className="labelWidth"
-                      >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                      </DropdownButton>
+                      ></DropdownButton>
                     </InputGroup>
                   </Col>
                 </Row>
@@ -251,15 +233,7 @@ class SearchPage extends React.Component {
                         variant="outline-secondary"
                         title="Weight"
                         className="labelWidth"
-                      >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                      </DropdownButton>
+                      ></DropdownButton>
                     </InputGroup>
                   </Col>
                   <Col md={4}>
@@ -274,15 +248,7 @@ class SearchPage extends React.Component {
                         variant="outline-secondary"
                         title="Name"
                         className="labelWidth"
-                      >
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#">
-                          Something else here
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                      </DropdownButton>
+                      ></DropdownButton>
                     </InputGroup>
                   </Col>
                   <Col md={4}>
@@ -317,7 +283,12 @@ class SearchPage extends React.Component {
         </div>
       );
     } else {
-      alert("Hi There");
+      console.log(
+        "Please log in or create a new account to search for and find your pet!"
+      );
+      alert(
+        "Please log in or create a new account to search for and find your pet!"
+      );
       return <Redirect to="/" />;
     }
   }
