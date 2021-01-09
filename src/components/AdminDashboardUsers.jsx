@@ -38,19 +38,21 @@ class AdminDashboardUsers extends React.Component {
 
   render() {
     return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Type</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <tbody>{this.renderUsersTable()}</tbody>
-      </Table>
+      <div className="mx-5 ">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Type</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderUsersTable()}</tbody>
+        </Table>
+      </div>
     );
   }
 }

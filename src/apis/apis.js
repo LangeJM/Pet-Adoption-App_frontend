@@ -1,13 +1,11 @@
 import axios from 'axios'
-
 import Cookies from 'js-cookie';
 
-const baseUrl = 'http://localhost:5000/api'
+// Local server:
+// const baseUrl = 'http://localhost:5000/api'
 
-
-
-
-
+// Cloud-hosted server:
+const baseUrl = `${window.location.origin}:5000/api`
 
 export const createUserApi = (data) => {
     return axios({

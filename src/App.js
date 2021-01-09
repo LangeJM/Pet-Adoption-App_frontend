@@ -83,7 +83,7 @@ class App extends React.Component {
         <Switch>
           <React.Fragment>
           <div className=' w-100 d-flex justify-content-center'>
-            <div className="App w-75">
+            <div className="App w-75" style={{minHeight: "100vh"}}>
               {headerVar}
               <SignInModal
                 signInModalIsOpen={signInModalIsOpen}

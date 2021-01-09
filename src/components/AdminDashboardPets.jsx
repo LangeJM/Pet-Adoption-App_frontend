@@ -40,21 +40,23 @@ class AdminDashboardPets extends React.Component {
 
   render() {
     return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Type</th>
-            <th>Breed</th>
-            <th>Color</th>
-            <th>Weight</th>
-            <th>Height</th>
-          </tr>
-        </thead>
-        <tbody>{this.renderPetsTable()}</tbody>
-      </Table>
+      <div className="mx-5 ">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Type</th>
+              <th>Breed</th>
+              <th>Color</th>
+              <th>Weight</th>
+              <th>Height</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderPetsTable()}</tbody>
+        </Table>
+      </div>
     );
   }
 }
