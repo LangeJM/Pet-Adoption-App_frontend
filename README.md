@@ -1,12 +1,11 @@
-# ITC Fullstack Project
+# Pet-Adoption-App_frontend
 
-## I-Pets - Pet Adoption made easy
+Front-end piece of full stack project to create a pet adoption app, written in ReactJS utilizing Bootstrap.
+  
+Check out the deployed app [here](http://ec2-3-19-63-106.us-east-2.compute.amazonaws.com/).
 
-Not mobile friendly currently :/
+### Screenshots
 
-[Link to the deployed app](http://ec2-3-19-63-106.us-east-2.compute.amazonaws.com/). I deployed on AWS which doesn't come with SSL natively...
-
-Admin user:
-admin@user.com // admin12345
-Normal user:
-test@user.com // 1234567
+![Screenshot01](/IPet01.png?raw=true)
+![Screenshot01](/IPet02.png?raw=true)
+![Screenshot01](/IPet03.png?raw=true)
